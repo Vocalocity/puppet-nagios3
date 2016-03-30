@@ -15,6 +15,8 @@
 
 ## Overview
 
+WORK IN PROGRESS - DO NOT USE!!!!
+
 A one-maybe-two sentence summary of what the module does/what problem it solves.
 This is your 30 second elevator pitch for your module. Consider including
 OS/Puppet version it works with.
@@ -42,6 +44,9 @@ management, etc.) this is the time to mention it.
 
 If your module requires anything extra before setting up (pluginsync enabled,
 etc.), mention it here.
+
+* puppetlabs-stdlib
+* stahnma-epel
 
 ### Beginning with nagios3
 
