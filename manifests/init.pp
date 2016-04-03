@@ -89,6 +89,40 @@ class nagios3 (
   $bare_update_check             = $nagios3::params::bare_update_check,
   $cached_host_check_horizon     = $nagios3::params::cached_host_check_horizon,
   $cached_service_check_horizon  = $nagios3::params::cached_service_check_horizon,
+  $cfg_dir                       = $nagios3::params::cfg_dir,
+  $cfg_file                      = $nagios3::params::cfg_file,
+  $check_external_commands       = $nagios3::params::check_external_commands,
+  $check_for_orphaned_hosts      = $nagios3::params::check_for_orphaned_hosts,
+  $check_for_orphaned_services   = $nagios3::params::check_for_orphaned_services,
+  $check_for_updates             = $nagios3::params::check_for_updates,
+  $check_host_freshness          = $nagios3::params::check_host_freshness,
+  $check_result_path             = $nagios3::params::check_result_path,
+  $check_result_reaper_frequency = $nagios3::params::check_result_reaper_frequency,
+  $check_service_freshness       = $nagios3::params::check_service_freshness,
+  $command_check_interval        = $nagios3::params::command_check_interval,
+  $command_file                  = $nagios3::params::command_file,
+  $daemon_dumps_core             = $nagios3::params::daemon_dumps_core,
+  $date_format                   = $nagios3::params::date_format,
+  $debug_file                    = $nagios3::params::debug_file,
+  $debug_level                   = $nagios3::params::debug_level,
+  $debug_verbosity               = $nagios3::params::debug_verbosity,
+  $enable_embedded_perl                        = $nagios3::params::enable_embedded_perl,
+  $enable_environment_macros                   = $nagios3::params::enable_environment_macros,
+  $enable_event_handlers                       = $nagios3::params::enable_event_handlers,
+  $enable_flap_detection                       = $nagios3::params::enable_flap_detection,
+  $enable_notifications                        = $nagios3::params::enable_notifications,
+  $enable_predictive_host_dependency_checks    = $nagios3::params::enable_predictive_host_dependency_checks,
+  $enable_predictive_service_dependency_checks = $nagios3::params::enable_predictive_service_dependency_checks,
+  $event_broker_options                        = $nagios3::params::event_broker_options,
+  $event_handler_timeout                       = $nagios3::params::event_handler_timeout,
+  $execute_host_checks                         = $nagios3::params::execute_host_checks,
+  $execute_service_checks                      = $nagios3::params::execute_service_checks,
+  $external_command_buffer_slots               = $nagios3::params::external_command_buffer_slots,
+
+
+
+
+
 ) inherits nagios3::params {
 
   # Parameter validation
@@ -108,7 +142,7 @@ class nagios3 (
   validate_string($user_home)
   validate_string($user_shell)
 
-
+  # nagios.cfg parameter validation
   validate_integer($accept_passive_host_checks)
   validate_integer($accept_passive_service_checks)
   validate_integer($additional_freshness_latency)
@@ -120,6 +154,38 @@ class nagios3 (
   validate_integer($bare_update_check)
   validate_integer($cached_host_check_horizon)
   validate_integer($cached_service_check_horizon)
+  validate_array($cfg_dir)
+  validate_array($cfg_file)
+  validate_integer($check_external_commands)
+  validate_integer($check_for_orphaned_hosts)
+  validate_integer($check_for_orphaned_services)
+  validate_integer($check_for_updates)
+  validate_integer($check_host_freshness)
+  validate_string($check_result_path)
+  validate_integer($check_result_reaper_frequency)
+  validate_integer($check_service_freshness)
+  validate_string($command_check_interval)
+  validate_string($command_file)
+
+  validate_integer($daemon_dumps_core)
+  validate_string($date_format)
+  validate_string($debug_file)
+  validate_integer($debug_level)
+  validate_integer($debug_verbosity)
+
+  validate_integer($enable_embedded_perl)
+  validate_integer($enable_environment_macros)
+  validate_integer($enable_event_handlers)
+  validate_integer($enable_flap_detection)
+  validate_integer($enable_notifications)
+  validate_integer($enable_predictive_host_dependency_checks)
+  validate_integer($enable_predictive_service_dependency_checks)
+  validate_string($event_broker_options)
+  validate_integer($event_handler_timeout)
+  validate_integer($execute_host_checks)
+  validate_integer($execute_service_checks)
+  validate_integer($external_command_buffer_slots)
+
 
   if ($install_epel == true) {
     class { '::epel':
@@ -168,7 +234,7 @@ class nagios3 (
     content => template("nagios3/${nagios3::params::nagios_config_template}"),
     require => [
       Package[$nagios3::params::packages],
-      File[$nagios::params::config_dir]
+      File[$nagios3::params::config_dir]
     ],
   }
 

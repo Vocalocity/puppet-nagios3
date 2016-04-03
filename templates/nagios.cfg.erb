@@ -27,33 +27,38 @@ log_file=@localstatedir@/nagios.log
 # if you wish (as shown below), or keep them all in a single config file.
 
 # You can specify individual object config files as shown below:
-cfg_file=@sysconfdir@/objects/commands.cfg
-cfg_file=@sysconfdir@/objects/contacts.cfg
-cfg_file=@sysconfdir@/objects/timeperiods.cfg
-cfg_file=@sysconfdir@/objects/templates.cfg
+cfg_file=/etc/nagios/objects/commands.cfg
+cfg_file=/etc/nagios/objects/contacts.cfg
+cfg_file=/etc/nagios/objects/timeperiods.cfg
+cfg_file=/etc/nagios/objects/templates.cfg
 
 # Definitions for monitoring the local (Linux) host
-cfg_file=@sysconfdir@/objects/localhost.cfg
+cfg_file=/etc/nagios/objects/localhost.cfg
 
 # Definitions for monitoring a Windows machine
-#cfg_file=@sysconfdir@/objects/windows.cfg
+#cfg_file=/etc/nagios/objects/windows.cfg
 
 # Definitions for monitoring a router/switch
-#cfg_file=@sysconfdir@/objects/switch.cfg
+#cfg_file=/etc/nagios/objects/switch.cfg
 
 # Definitions for monitoring a network printer
-#cfg_file=@sysconfdir@/objects/printer.cfg
+#cfg_file=/etc/nagios/objects/printer.cfg
 
+<% @cfg_file.each do |val| -%>
+cfg_file=<%= val %>
+<% end -%>
 
 # You can also tell Nagios to process all config files (with a .cfg
 # extension) in a particular directory by using the cfg_dir
 # directive as shown below:
 
-#cfg_dir=@sysconfdir@/servers
-#cfg_dir=@sysconfdir@/printers
-#cfg_dir=@sysconfdir@/switches
-#cfg_dir=@sysconfdir@/routers
-
+#cfg_dir=/etc/nagios/servers
+#cfg_dir=/etc/nagios/printers
+#cfg_dir=/etc/nagios/switches
+#cfg_dir=/etc/nagios/routers
+<% @cfg_dir.each do |val| -%>
+cfg_dir=<%= val %>
+<% end -%>
 
 
 
@@ -93,7 +98,7 @@ precached_object_file=@localstatedir@/objects.precache
 # defined as macros in this file and restrictive permissions (600)
 # can be placed on this file.
 
-resource_file=@sysconfdir@/resource.cfg
+resource_file=/etc/nagios/resource.cfg
 
 
 
@@ -140,7 +145,7 @@ nagios_group=@nagios_grp@
 # you will have to enable this.
 # Values: 0 = disable commands, 1 = enable commands
 
-check_external_commands=1
+check_external_commands=<%= scope.lookupvar('check_external_commands') %>
 
 
 
@@ -158,7 +163,7 @@ check_external_commands=1
 # command file as often as possible.
 
 #command_check_interval=15s
-command_check_interval=-1
+command_check_interval=<%= scope.lookupvar('command_check_interval') %>
 
 
 
@@ -170,7 +175,7 @@ command_check_interval=-1
 # directory level instead of on the file, as the file is deleted every
 # time its contents are processed.
 
-command_file=@localstatedir@/rw/nagios.cmd
+command_file=<%= scope.lookupvar('command_file') %>
 
 
 
@@ -180,7 +185,7 @@ command_file=@localstatedir@/rw/nagios.cmd
 # external commands before they are processed.  As external commands
 # are processed by the daemon, they are removed from the buffer.
 
-external_command_buffer_slots=4096
+external_command_buffer_slots=<%= scope.lookupvar('external_command_buffer_slots') %>
 
 
 
@@ -216,7 +221,7 @@ temp_path=@TMPDIR@
 #         -1      = Broker everything
 #         <other> = See documentation
 
-event_broker_options=-1
+event_broker_options=<%= scope.lookupvar('event_broker_options') %>
 
 
 
@@ -439,7 +444,7 @@ max_concurrent_checks=0
 # This is the frequency (in seconds!) that Nagios will process
 # the results of host and service checks.
 
-check_result_reaper_frequency=10
+check_result_reaper_frequency=<%=  scope.lookupvar('check_result_reaper_frequency') %>
 
 
 
@@ -462,7 +467,7 @@ max_check_result_reaper_time=30
 # Note: Make sure that only one instance of Nagios has access
 # to this directory!
 
-check_result_path=@CHECKRESULTDIR@
+check_result_path=<%= scope.lookupvar('check_result_path') %>
 
 
 
@@ -513,7 +518,7 @@ cached_service_check_horizon=<%= scope.lookupvar('cached_service_check_horizon')
 #  0 = Disable predictive checks
 #  1 = Enable predictive checks (default)
 
-enable_predictive_host_dependency_checks=1
+enable_predictive_host_dependency_checks=<%= scope.lookupvar('enable_predictive_host_dependency_checks') %>
 
 
 
@@ -526,7 +531,7 @@ enable_predictive_host_dependency_checks=1
 #  0 = Disable predictive checks
 #  1 = Enable predictive checks (default)
 
-enable_predictive_service_dependency_checks=1
+enable_predictive_service_dependency_checks=<%= scope.lookupvar('enable_predictive_service_dependency_checks') %>
 
 
 
@@ -608,7 +613,7 @@ sleep_time=0.25
 
 service_check_timeout=60
 host_check_timeout=30
-event_handler_timeout=30
+event_handler_timeout=<%= scope.lookupvar('event_handler_timeout') %>
 notification_timeout=30
 ocsp_timeout=5
 perfdata_timeout=5
@@ -728,7 +733,7 @@ interval_length=60
 # by Nagios Enterprises from the update check is processed in accordance
 # with our privacy policy - see http://api.nagios.org for details.
 
-check_for_updates=1
+check_for_updates=<%= scope.lookupvar('check_for_updates') %>
 
 
 
@@ -764,7 +769,7 @@ use_aggressive_host_checking=0
 # disabling the execution of service checks, leave this enabled!
 # Values: 1 = enable checks, 0 = disable checks
 
-execute_service_checks=1
+execute_service_checks=<%= scope.lookupvar('execute_service_checks') %>
 
 
 
@@ -786,7 +791,7 @@ accept_passive_service_checks=<%= scope.lookupvar('accept_passive_service_checks
 # disabling the execution of host checks, leave this enabled!
 # Values: 1 = enable checks, 0 = disable checks
 
-execute_host_checks=1
+execute_host_checks=<$= scope.lookupvar('execute_host_checks') %>
 
 
 
@@ -804,7 +809,7 @@ accept_passive_host_checks=<%= scope.lookupvar('accept_passive_host_checks') %>
 # service notifications when it is initially (re)started.
 # Values: 1 = enable notifications, 0 = disable notifications
 
-enable_notifications=1
+enable_notifications=<%= scope.lookupvar('enable_notifications') %>
 
 
 
@@ -814,7 +819,7 @@ enable_notifications=1
 # you're implementing redundant hosts, leave this option enabled.
 # Values: 1 = enable event handlers, 0 = disable event handlers
 
-enable_event_handlers=1
+enable_event_handlers=<%= scope.lookupvar('enable_event_handlers') %>
 
 
 
@@ -1003,8 +1008,8 @@ passive_host_checks_are_soft=0
 # rescheduled, make sure you have orphaned service checks enabled.
 # Values: 1 = enable checks, 0 = disable checks
 
-check_for_orphaned_services=1
-check_for_orphaned_hosts=1
+check_for_orphaned_services=<%= scope.lookupvar('check_for_orphaned_services') %>
+check_for_orphaned_hosts=<%= scope.lookupvar('check_for_orphaned_hosts') %>
 
 
 
@@ -1015,7 +1020,7 @@ check_for_orphaned_hosts=1
 # manner.
 # Values: 1 = enabled freshness checking, 0 = disable freshness checking
 
-check_service_freshness=1
+check_service_freshness=<$= scope.lookupvar('check_service_freshness') %>
 
 
 
@@ -1051,7 +1056,7 @@ service_check_timeout_state=c
 # manner.
 # Values: 1 = enabled freshness checking, 0 = disable freshness checking
 
-check_host_freshness=0
+check_host_freshness=<%= scope.lookupvar('check_host_freshness') %>
 
 
 
@@ -1087,7 +1092,7 @@ additional_freshness_latency=<%= scope.lookupvar('additional_freshness_latency')
 # Values: 1 = enable flap detection
 #         0 = disable flap detection (default)
 
-enable_flap_detection=1
+enable_flap_detection=<%= scope.lookupvar('enable_flap_detection') %>
 
 
 
@@ -1112,7 +1117,7 @@ high_host_flap_threshold=20.0
 #	strict-iso8601	(YYYY-MM-DDTHH:MM:SS)
 #
 
-date_format=us
+date_format=<%= scope.lookupvar('date_format') %>
 
 
 
@@ -1152,7 +1157,7 @@ p1_file=@bindir@/p1.pl
 # has not been compiled with support for embedded Perl.
 # Values: 0 = disable interpreter, 1 = enable interpreter
 
-enable_embedded_perl=1
+enable_embedded_perl=<%= scope.lookupvar('enable_embedded_perl') %>
 
 
 
@@ -1240,7 +1245,7 @@ admin_pager=<%= scope.lookupvar('admin_pager') %>
 # Values: 1 - Allow core dumps
 #         0 - Do not allow core dumps (default)
 
-daemon_dumps_core=0
+daemon_dumps_core=<%= scope.lookupvar('daemon_dumps_core') %>
 
 
 
@@ -1266,7 +1271,7 @@ use_large_installation_tweaks=0
 # Values: 1 - Enable environment variable macros (default)
 #         0 - Disable environment variable macros
 
-enable_environment_macros=1
+enable_environment_macros=<%= scope.lookupvar('enable_environment_macros') %>
 
 
 
@@ -1317,7 +1322,7 @@ enable_environment_macros=1
 #          1024 = Comments
 #          2048 = Macros
 
-debug_level=0
+debug_level=<%= scope.lookupvar('debug_level') %>
 
 
 
@@ -1327,14 +1332,14 @@ debug_level=0
 #         1 = More detailed
 #         2 = Very detailed
 
-debug_verbosity=1
+debug_verbosity=<%= scope.lookupvar('debug_verbosity') %>
 
 
 
 # DEBUG FILE
 # This option determines where Nagios should write debugging information.
 
-debug_file=@localstatedir@/nagios.debug
+debug_file=<%= scope.lookupvar('debug_file') %>
 
 
 
