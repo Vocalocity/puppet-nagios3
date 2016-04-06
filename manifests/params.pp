@@ -195,3 +195,4 @@ class nagios3::params {
     }
   } #osfamily
 }
+

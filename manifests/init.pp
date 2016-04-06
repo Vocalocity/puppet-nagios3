@@ -154,7 +154,47 @@ class nagios3 (
   $nagios_user                                 = $nagios3::params::nagios_user,
   $notification_timeout                        = $nagios3::params::notification_timeout,
 
+  $obsess_over_hosts                       = $nagios3::params::obsess_over_hosts,
+  $obsess_over_services                    = $nagios3::params::obsess_over_services,
+  $ocsp_timeout                            = $nagios3::params::ocsp_timeout,
+  $object_cache_file                       = $nagios3::params::object_cache_file,
+  $p1_file                                 = $nagios3::params::p1_file,
+  $passive_host_checks_are_soft            = $nagios3::params::passive_host_checks_are_soft,
   
+  $perfdata_timeout                        = $nagios3::params::perfdata_timeout,
+  $precached_object_file                   = $nagios3::params::precached_object_file,
+  $process_performance_data                = $nagios3::params::process_performance_data,
+  $resource_file                           = $nagios3::params::resource_file,
+  $retained_contact_host_attribute_mask    = $nagios3::params::retained_contact_host_attribute_mask,
+  $retained_contact_service_attribute_mask = $nagios3::params::retained_contact_service_attribute_mask,
+  $retained_host_attribute_mask            = $nagios3::params::retained_host_attribute_mask,
+  $retained_process_host_attribute_mask    = $nagios3::params::retained_process_host_attribute_mask,
+  $retained_process_service_attribute_mask = $nagios3::params::retained_process_service_attribute_mask,
+  $retained_service_attribute_mask         = $nagios3::params::retained_service_attribute_mask,
+  $retain_state_information                = $nagios3::params::retain_state_information,
+  $retention_update_interval               = $nagios3::params::retention_update_interval,
+  $service_check_timeout                   = $nagios3::params::service_check_timeout,
+  $service_check_timeout_state             = $nagios3::params::service_check_timeout_state,
+  $service_freshness_check_interval        = $nagios3::params::service_freshness_check_interval,
+  $service_inter_check_delay_method        = $nagios3::params::service_inter_check_delay_method,
+  $service_interleave_factor               = $nagios3::params::service_interleave_factor,
+  $sleep_time                              = $nagios3::params::sleep_time,
+  $soft_state_dependencies                 = $nagios3::params::soft_state_dependencies,
+  $state_retention_file                    = $nagios3::params::state_retention_file,
+  $status_file                             = $nagios3::params::status_file,
+  $status_update_interval                  = $nagios3::params::status_update_interval,
+  $temp_file                               = $nagios3::params::temp_file,
+  $temp_path                               = $nagios3::params::temp_path,
+  $translate_passive_host_checks           = $nagios3::params::translate_passive_host_checks,
+  $use_aggressive_host_checking            = $nagios3::params::use_aggressive_host_checking,
+  $use_embedded_perl_implicitly            = $nagios3::params::use_embedded_perl_implicitly,
+  $use_large_installation_tweaks           = $nagios3::params::use_large_installation_tweaks,
+  $use_regexp_matching                     = $nagios3::params::use_regexp_matching,
+  $use_retained_program_state              = $nagios3::params::use_retained_program_state,
+  $use_retained_scheduling_info            = $nagios3::params::use_retained_scheduling_info,
+  $use_syslog                              = $nagios3::params::use_syslog,
+  $use_true_regexp_matching                = $nagios3::params::use_true_regexp_matching,
+ 
 ) inherits nagios3::params {
 
   # Parameter validation
@@ -253,6 +293,47 @@ class nagios3 (
   validate_string($nagios_user)
   validate_integer($notification_timeout)
 
+  validate_integer($obsess_over_hosts)
+  validate_integer($obsess_over_services)
+  validate_integer($ocsp_timeout)
+  validate_string($object_cache_file)
+  validate_string($p1_file)
+  validate_integer($passive_host_checks_are_soft)
+  validate_integer($perfdata_timeout)
+  validate_string($precached_object_file)
+  validate_integer($process_performance_data)
+  validate_string($resource_file)
+  validate_integer($retained_contact_host_attribute_mask)
+  validate_integer($retained_contact_service_attribute_mask)
+  validate_integer($retained_host_attribute_mask)
+  validate_integer($retained_process_host_attribute_mask)
+  validate_integer($retained_process_service_attribute_mask)
+  validate_integer($retained_service_attribute_mask)
+  validate_integer($retain_state_information)
+  validate_integer($retention_update_interval)
+  validate_integer($service_check_timeout)
+  validate_string($service_check_timeout_state)
+  validate_integer($service_freshness_check_interval)
+  validate_string($service_inter_check_delay_method)
+  validate_string($service_interleave_factor)
+  validate_numeric($sleep_time)
+  validate_integer($soft_state_dependencies)
+  validate_string($state_retention_file)
+  validate_string($status_file)
+  validate_integer($status_update_interval)
+  validate_string($temp_file)
+  validate_string($temp_path)
+  validate_integer($translate_passive_host_checks)
+  validate_integer($use_aggressive_host_checking)
+  validate_integer($use_embedded_perl_implicitly)
+  validate_integer($use_large_installation_tweaks)
+  validate_integer($use_regexp_matching)
+  validate_integer($use_retained_program_state)
+  validate_integer($use_retained_scheduling_info)
+  validate_integer($use_syslog)
+  validate_integer($use_true_regexp_matching)  
+  
+  
   if ($install_epel == true) {
     class { '::epel':
       epel_enabled => true,
@@ -305,3 +386,4 @@ class nagios3 (
   }
 
 }
+
