@@ -119,10 +119,42 @@ class nagios3 (
   $execute_service_checks                      = $nagios3::params::execute_service_checks,
   $external_command_buffer_slots               = $nagios3::params::external_command_buffer_slots,
 
+  $high_host_flap_threshold      = $nagios3::params::high_host_flap_threshold,
+  $high_service_flap_threshold   = $nagios3::params::high_service_flap_threshold,
+  $host_check_timeout            = $nagios3::params::host_check_timeout,
+  $host_freshness_check_interval = $nagios3::params::host_freshness_check_interval,
+  $host_inter_check_delay_method = $nagios3::params::host_inter_check_delay_method,
 
+  $illegal_macro_output_chars    = $nagios3::params::illegal_macro_output_chars,
+  $illegal_object_name_chars     = $nagios3::params::illegal_object_name_chars,
+  $interval_length               = $nagios3::params::interval_length,
 
+  $lock_file                                   = $nagios3::params::lock_file,
+  $log_archive_path                            = $nagios3::params::log_archive_path,
+  $log_event_handlers                          = $nagios3::params::log_event_handlers,
+  $log_external_commands                       = $nagios3::params::log_external_commands,
+  $log_file                                    = $nagios3::params::log_file,
+  $log_host_retries                            = $nagios3::params::log_host_retries,
+  $log_initial_states                          = $nagios3::params::log_initial_states,
+  $log_notifications                           = $nagios3::params::log_notifications,
+  $log_passive_checks                          = $nagios3::params::log_passive_checks,
+  $log_rotation_method                         = $nagios3::params::log_rotation_method,
+  $log_service_retries                         = $nagios3::params::log_service_retries,
+  $low_host_flap_threshold                     = $nagios3::params::low_host_flap_threshold,
+  $low_service_flap_threshold                  = $nagios3::params::low_service_flap_threshold,
 
+  $max_check_result_file_age                   = $nagios3::params::max_check_result_file_age,
+  $max_check_result_reaper_time                = $nagios3::params::max_check_result_reaper_time,
+  $max_concurrent_checks                       = $nagios3::params::max_concurrent_checks,
+  $max_debug_file_size                         = $nagios3::params::max_debug_file_size,
+  $max_host_check_spread                       = $nagios3::params::max_host_check_spread,
+  $max_service_check_spread                    = $nagios3::params::max_service_check_spread,
 
+  $nagios_group                                = $nagios3::params::nagios_group,
+  $nagios_user                                 = $nagios3::params::nagios_user,
+  $notification_timeout                        = $nagios3::params::notification_timeout,
+
+  
 ) inherits nagios3::params {
 
   # Parameter validation
@@ -186,10 +218,44 @@ class nagios3 (
   validate_integer($execute_service_checks)
   validate_integer($external_command_buffer_slots)
 
+  validate_numeric($high_host_flap_threshold)
+  validate_numeric($high_service_flap_threshold)
+  validate_integer($host_check_timeout)
+  validate_integer($host_freshness_check_interval)
+  validate_string($host_inter_check_delay_method)
+
+  validate_string($illegal_macro_output_chars)
+  validate_string($illegal_object_name_chars)
+  validate_integer($interval_length)
+
+  validate_string($lock_file)
+  validate_string($log_archive_path)
+  validate_integer($log_event_handlers)
+  validate_integer($log_external_commands)
+  validate_string($log_file)
+  validate_integer($log_host_retries)
+  validate_integer($log_initial_states)
+  validate_integer($log_notifications)
+  validate_integer($log_passive_checks)
+  validate_string($log_rotation_method)
+  validate_integer($log_service_retries)
+  validate_numeric($low_host_flap_threshold)
+  validate_numeric($low_service_flap_threshold)
+
+  validate_integer($max_check_result_file_age)
+  validate_integer($max_check_result_reaper_time)
+  validate_integer($max_concurrent_checks)
+  validate_integer($max_debug_file_size)
+  validate_integer($max_host_check_spread)
+  validate_integer($max_service_check_spread)
+
+  validate_string($nagios_group)
+  validate_string($nagios_user)
+  validate_integer($notification_timeout)
 
   if ($install_epel == true) {
     class { '::epel':
-      epel_enabled => true
+      epel_enabled => true,
     }
   }
 

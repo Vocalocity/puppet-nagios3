@@ -16,7 +16,7 @@
 # for historical purposes.  This should be the first option specified
 # in the config file!!!
 
-log_file=@localstatedir@/nagios.log
+log_file=<%= scope.lookupvar('log_file') %>
 
 
 
@@ -125,7 +125,7 @@ status_update_interval=10
 # This determines the effective user that Nagios should run as.
 # You can either supply a username or a UID.
 
-nagios_user=@nagios_user@
+nagios_user=<%= scope.lookupvar('nagios_user') %>
 
 
 
@@ -133,7 +133,7 @@ nagios_user=@nagios_user@
 # This determines the effective group that Nagios should run as.
 # You can either supply a group name or a GID.
 
-nagios_group=@nagios_grp@
+nagios_group=<%= scope.lookupvar('nagios_group') %>
 
 
 
@@ -193,7 +193,7 @@ external_command_buffer_slots=<%= scope.lookupvar('external_command_buffer_slots
 # This is the lockfile that Nagios will use to store its PID number
 # in when it is running in daemon mode.
 
-lock_file=@lockfile@
+lock_file=<%= scope.lookupvar('lock_file') %>
 
 
 
@@ -261,7 +261,7 @@ event_broker_options=<%= scope.lookupvar('event_broker_options') %>
 #	w	= Weekly rotation (midnight on Saturday evening)
 #	m	= Monthly rotation (midnight last day of month)
 
-log_rotation_method=d
+log_rotation_method=<%= scope.lookupvar('log_rotation_method') %>
 
 
 
@@ -269,7 +269,7 @@ log_rotation_method=d
 # This is the directory where archived (rotated) log files should be
 # placed (assuming you've chosen to do log rotation).
 
-log_archive_path=@localstatedir@/archives
+log_archive_path=<%= scope.lookupvar('log_archive_path') %>
 
 
 
@@ -285,7 +285,7 @@ use_syslog=1
 # If you don't want notifications to be logged, set this value to 0.
 # If notifications should be logged, set the value to 1.
 
-log_notifications=1
+log_notifications=<%= scope.lookupvar('log_notifications') %>
 
 
 
@@ -293,7 +293,7 @@ log_notifications=1
 # If you don't want service check retries to be logged, set this value
 # to 0.  If retries should be logged, set the value to 1.
 
-log_service_retries=1
+log_service_retries=<%= scope.lookupvar('log_service_retries') %>
 
 
 
@@ -301,7 +301,7 @@ log_service_retries=1
 # If you don't want host check retries to be logged, set this value to
 # 0.  If retries should be logged, set the value to 1.
 
-log_host_retries=1
+log_host_retries=<%= scope.lookupvar('log_host_retries') %>
 
 
 
@@ -310,7 +310,7 @@ log_host_retries=1
 # this value to 0.  If event handlers should be logged, set the value
 # to 1.
 
-log_event_handlers=1
+log_event_handlers=<%= scope.lookupvar('log_event_handlers') %>
 
 
 
@@ -322,7 +322,7 @@ log_event_handlers=1
 # statistics reporting, you do not need to enable this option.  In
 # this case, set the value to 0.
 
-log_initial_states=0
+log_initial_states=<%= scope.lookupvar('log_initial_states') %>
 
 
 
@@ -333,7 +333,7 @@ log_initial_states=0
 # checks - see the option below for controlling whether or not
 # passive checks are logged.
 
-log_external_commands=1
+log_external_commands=<%= scope.lookupvar('log_external_commands') %>
 
 
 
@@ -342,7 +342,7 @@ log_external_commands=1
 # this value to 0.  If passive checks should be logged, set
 # this value to 1.
 
-log_passive_checks=1
+log_passive_checks=<%= scope.lookupvar('log_passive_checks') %>
 
 
 
@@ -383,7 +383,7 @@ service_inter_check_delay_method=s
 # program start time that an initial check of all services should
 # be completed.  Default is 30 minutes.
 
-max_service_check_spread=30
+max_service_check_spread=<%= scope.lookupvar('max_service_check_spread') %>
 
 
 
@@ -415,7 +415,7 @@ service_interleave_factor=s
 #	s	= Use "smart" inter-check delay calculation
 #       x.xx    = Use an inter-check delay of x.xx seconds
 
-host_inter_check_delay_method=s
+host_inter_check_delay_method=<%= scope.lookupvar('host_inter_check_delay_method') %>
 
 
 
@@ -424,7 +424,7 @@ host_inter_check_delay_method=s
 # program start time that an initial check of all hosts should
 # be completed.  Default is 30 minutes.
 
-max_host_check_spread=30
+max_host_check_spread=<%= scope.lookupvar('max_host_check_spread') %>
 
 
 
@@ -436,7 +436,7 @@ max_host_check_spread=30
 # will not restrict the number of concurrent checks that are
 # being executed.
 
-max_concurrent_checks=0
+max_concurrent_checks=<%= scope.lookupvar('max_concurrent_checks') %>
 
 
 
@@ -444,7 +444,7 @@ max_concurrent_checks=0
 # This is the frequency (in seconds!) that Nagios will process
 # the results of host and service checks.
 
-check_result_reaper_frequency=<%=  scope.lookupvar('check_result_reaper_frequency') %>
+check_result_reaper_frequency=<%= scope.lookupvar('check_result_reaper_frequency') %>
 
 
 
@@ -455,7 +455,7 @@ check_result_reaper_frequency=<%=  scope.lookupvar('check_result_reaper_frequenc
 # returning control back to Nagios so it can perform other
 # duties.
 
-max_check_result_reaper_time=30
+max_check_result_reaper_time=<%= scope.lookupvar('max_check_result_reaper_time') %>
 
 
 
@@ -477,7 +477,7 @@ check_result_path=<%= scope.lookupvar('check_result_path') %>
 # result files are considered to be valid.  Files older than this
 # threshold will be mercilessly deleted without further processing.
 
-max_check_result_file_age=3600
+max_check_result_file_age=<%= scope.lookupvar('max_check_result_file_age') %>
 
 
 
@@ -612,9 +612,9 @@ sleep_time=0.25
 # seconds.
 
 service_check_timeout=60
-host_check_timeout=30
+host_check_timeout=<%= scope.lookupvar('host_check_timeout') %>
 event_handler_timeout=<%= scope.lookupvar('event_handler_timeout') %>
-notification_timeout=30
+notification_timeout=<%= scope.lookupvar('notification_timeout') %>
 ocsp_timeout=5
 perfdata_timeout=5
 
@@ -720,7 +720,7 @@ retained_contact_service_attribute_mask=0
 # that each interval is one minute long (60 seconds).  Other settings
 # have not been tested much, so your mileage is likely to vary...
 
-interval_length=60
+interval_length=<%= scope.lookupvar('interval_length') %>
 
 
 
@@ -1065,7 +1065,7 @@ check_host_freshness=<%= scope.lookupvar('check_host_freshness') %>
 # check the "freshness" of host check results.  If you have
 # disabled host freshness checking, this option has no effect.
 
-host_freshness_check_interval=60
+host_freshness_check_interval=<%= scope.lookupvar('host_freshness_check_interval') %>
 
 
 
@@ -1101,10 +1101,10 @@ enable_flap_detection=<%= scope.lookupvar('enable_flap_detection') %>
 # an explanation of what this option does.  This option
 # has no effect if flap detection is disabled.
 
-low_service_flap_threshold=5.0
-high_service_flap_threshold=20.0
-low_host_flap_threshold=5.0
-high_host_flap_threshold=20.0
+low_service_flap_threshold=<%= scope.lookupvar('low_service_flap_threshold') %>
+high_service_flap_threshold=<%= scope.lookupvar('high_service_flap_threshold') %>
+low_host_flap_threshold=<%= scope.lookupvar('low_host_flap_threshold') %>
+high_host_flap_threshold=<%= scope.lookupvar('high_host_flap_threshold') %>
 
 
 
@@ -1177,7 +1177,7 @@ use_embedded_perl_implicitly=1
 # be used in host names, service descriptions, or names of other
 # object types.
 
-illegal_object_name_chars=`~!$%^&*|'"<>?,()=
+illegal_object_name_chars=<%= scope.lookupvar('illegal_object_name_chars') %>
 
 
 
@@ -1196,7 +1196,7 @@ illegal_object_name_chars=`~!$%^&*|'"<>?,()=
 #	$SERVICEACKAUTHOR$
 #	$SERVICEACKCOMMENT$
 
-illegal_macro_output_chars=`~$&|'"<>
+illegal_macro_output_chars=%<= scope.lookupvar('illegal_macro_output_chars') %>
 
 
 
@@ -1350,6 +1350,6 @@ debug_file=<%= scope.lookupvar('debug_file') %>
 # automatically be deleted.  This helps ensure your disk space usage doesn't
 # get out of control when debugging Nagios.
 
-max_debug_file_size=1000000
+max_debug_file_size=<%= scope.lookupvar('max_debug_file_size') %>
 
 
