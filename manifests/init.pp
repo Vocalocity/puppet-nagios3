@@ -46,9 +46,6 @@ class nagios3 (
   $running      = true,
   $atboot       = true,
 
-  # Requirements options
-  $install_epel = $nagios3::params::install_epel,
-
   # Configuration file handing options
   $purge_configs = false,
 
@@ -160,7 +157,7 @@ class nagios3 (
   $object_cache_file                       = $nagios3::params::object_cache_file,
   $p1_file                                 = $nagios3::params::p1_file,
   $passive_host_checks_are_soft            = $nagios3::params::passive_host_checks_are_soft,
-  
+
   $perfdata_timeout                        = $nagios3::params::perfdata_timeout,
   $precached_object_file                   = $nagios3::params::precached_object_file,
   $process_performance_data                = $nagios3::params::process_performance_data,
@@ -194,14 +191,13 @@ class nagios3 (
   $use_retained_scheduling_info            = $nagios3::params::use_retained_scheduling_info,
   $use_syslog                              = $nagios3::params::use_syslog,
   $use_true_regexp_matching                = $nagios3::params::use_true_regexp_matching,
- 
+
 ) inherits nagios3::params {
 
   # Parameter validation
   validate_bool($install)
   validate_bool($running)
   validate_bool($atboot)
-  validate_bool($install_epel)
   validate_bool($purge_configs)
   validate_array($packages)
   validate_string($config_dir)
@@ -331,14 +327,7 @@ class nagios3 (
   validate_integer($use_retained_program_state)
   validate_integer($use_retained_scheduling_info)
   validate_integer($use_syslog)
-  validate_integer($use_true_regexp_matching)  
-  
-  
-  if ($install_epel == true) {
-    class { '::epel':
-      epel_enabled => true,
-    }
-  }
+  validate_integer($use_true_regexp_matching)
 
   $package_ensure = $install ? {
     true    => 'present',

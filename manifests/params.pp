@@ -43,7 +43,6 @@ class nagios3::params {
       $install                = true
 
       # CentOS6 w/nagios from EPEL
-      $install_epel           = true
       $packages               = ['nagios', 'nagios-common']
 
       $config_dir             = '/etc/nagios'
