@@ -42,7 +42,9 @@
 class nagios3 (
 
   # Install the packages?
-  $install      = $nagios3::params::install,
+  $package_ensure = $nagios3::params::package_ensure,
+  $package_name   = $nagios3::params::package_name,
+
   $running      = true,
   $atboot       = true,
 
@@ -51,7 +53,6 @@ class nagios3 (
 
 
   # Nagios installation options
-  $packages           = $nagios3::params::packages,
 
   # Nagioss configuration directorys
   $config_dir         = $nagios3::params::config_dir,
@@ -218,11 +219,11 @@ class nagios3 (
 ) inherits nagios3::params {
 
   # Parameter validation
-  validate_bool($install)
   validate_bool($running)
   validate_bool($atboot)
   validate_bool($purge_configs)
-  validate_array($packages)
+  validate_string($package_ensure)
+  validate_string($package_name)
   validate_string($config_dir)
   validate_string($config_dir_d)
   validate_string($config_objects_dir)
@@ -420,11 +421,6 @@ class nagios3 (
   }
   validate_integer($use_true_regexp_matching)
 
-  $package_ensure = $install ? {
-    true    => 'present',
-    default => 'absent'
-  }
-
   $service_running = $running ? {
     true    => 'running',
     default => 'stopped'
@@ -435,9 +431,8 @@ class nagios3 (
     default => false
   }
 
-  # Package handling
-  package { $nagios3::params::packages:
-    ensure => $install,
+  package { $package_name:
+    ensure => $package_ensure,
   }
 
   # Configuration directory handling
@@ -449,7 +444,7 @@ class nagios3 (
     #purge   => $nagios3::purge,
     force   => true,
     recurse => true,
-    require => Package[$nagios3::params::packages],
+    require => Package[$package_name],
   }
 
   # Configuration file handling
@@ -460,7 +455,7 @@ class nagios3 (
     mode    => $nagios3::params::nagios_config_mode,
     content => template("nagios3/${nagios3::params::nagios_config_template}"),
     require => [
-      Package[$nagios3::params::packages],
+      Package[$package_name],
       File[$nagios3::params::config_dir]
     ],
   }

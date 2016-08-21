@@ -40,10 +40,9 @@ class nagios3::params {
   case $::osfamily {
     'RedHat': {
 
-      $install                = true
-
       # CentOS6 w/nagios from EPEL
-      $packages               = ['nagios', 'nagios-common']
+      $package_ensure         = 'installed'
+      $package_name           = 'nagios'
 
       $config_dir             = '/etc/nagios'
       $config_dir_owner       = 'root'
