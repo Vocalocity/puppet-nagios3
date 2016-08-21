@@ -1,6 +1,6 @@
 ##############################################################################
 #
-# NAGIOS.CFG - Sample Main Config File for Nagios @VERSION@
+# NAGIOS.CFG - Sample Main Config File for Nagios 3.5.1
 #
 # Read the documentation for more information on this configuration
 # file.  I've provided some comments here, but things may not be so
@@ -249,6 +249,9 @@ event_broker_options=<%= scope.lookupvar('event_broker_options') %>
 
 #broker_module=/somewhere/module1.o
 #broker_module=/somewhere/module2.o arg1 arg2=3 debug=0
+<% @broker_module.each do |val| -%>
+broker_module=<%= val %>
+<% end -%>
 
 
 
@@ -357,6 +360,12 @@ log_passive_checks=<%= scope.lookupvar('log_passive_checks') %>
 
 #global_host_event_handler=somecommand
 #global_service_event_handler=somecommand
+<% if defined?(@global_host_event_handler) -%>
+global_host_event_handler=<%= @global_host_event_handler %>
+<% end -%>
+<% if defined?(@global_service_event_handler) -%>
+global_service_event_handler=<%= @global_service_event_handler %>
+<% end -%>
 
 
 
@@ -554,6 +563,9 @@ soft_state_dependencies=<%= scope.lookupvar('soft_state_dependencies') %>
 # in system time (either forward or backwards).
 
 #time_change_threshold=900
+<% if defined?(@time_change_threshold) -%>
+time_change_threshold=<%= @time_change_threshold %>
+<% end -%>
 
 
 
@@ -847,6 +859,12 @@ process_performance_data=<%= scope.lookupvar('process_performance_data') %>
 
 #host_perfdata_command=process-host-perfdata
 #service_perfdata_command=process-service-perfdata
+<% if defined?(@host_perfdata_command) -%>
+host_perfdata_command=<%= @host_perfdata_command %>
+<% end -%>
+<% if defined?(@service_perfdata_command) -%>
+service_perfdata_command=<%= @service_perfdata_command %>
+<% end -%>
 
 
 
@@ -857,6 +875,12 @@ process_performance_data=<%= scope.lookupvar('process_performance_data') %>
 
 #host_perfdata_file=/tmp/host-perfdata
 #service_perfdata_file=/tmp/service-perfdata
+<% if defined?(@host_perfdata_file) -%>
+host_perfdata_file=<%= @host_perfdata_file %>
+<% end -%>
+<% if defined?(@service_perfdata_file) -%>
+service_perfdata_file=<%= @service_perfdata_file %>
+<% end -%>
 
 
 
@@ -870,6 +894,12 @@ process_performance_data=<%= scope.lookupvar('process_performance_data') %>
 
 #host_perfdata_file_template=[HOSTPERFDATA]\t$TIMET$\t$HOSTNAME$\t$HOSTEXECUTIONTIME$\t$HOSTOUTPUT$\t$HOSTPERFDATA$
 #service_perfdata_file_template=[SERVICEPERFDATA]\t$TIMET$\t$HOSTNAME$\t$SERVICEDESC$\t$SERVICEEXECUTIONTIME$\t$SERVICELATENCY$\t$SERVICEOUTPUT$\t$SERVICEPERFDATA$
+<% if defined?(@host_perfdata_file_template) -%>
+host_perfdata_file_template=<%= @host_perfdata_file_template %>
+<% end -%>
+<% if defined?(@service_perfdata_file_template) -%>
+service_perfdata_file_template=<%= @service_perfdata_file_template %>
+<% end -%>
 
 
 
@@ -882,6 +912,12 @@ process_performance_data=<%= scope.lookupvar('process_performance_data') %>
 
 #host_perfdata_file_mode=a
 #service_perfdata_file_mode=a
+<% if defined?(@host_perfdata_file_mode) -%>
+host_perfdata_file_mode=<%= @host_perfdata_file_mode %>
+<% end -%>
+<% if defined?(@service_perfdata_file_mode) -%>
+service_perfdata_file_mode=<%= @service_perfdata_file_mode %>
+<% end -%>
 
 
 
@@ -893,6 +929,12 @@ process_performance_data=<%= scope.lookupvar('process_performance_data') %>
 
 #host_perfdata_file_processing_interval=0
 #service_perfdata_file_processing_interval=0
+<% if defined?(@host_perfdata_file_processing_interval) -%>
+host_perfdata_file_processing_interval=<%= @host_perfdata_file_processing_interval %>
+<% end -%>
+<% if defined?(@service_perfdata_file_processing_interval) -%>
+service_perfdata_file_processing_interval=<%= @service_perfdata_file_processing_interval %>
+<% end -%>
 
 
 
@@ -903,6 +945,12 @@ process_performance_data=<%= scope.lookupvar('process_performance_data') %>
 
 #host_perfdata_file_processing_command=process-host-perfdata-file
 #service_perfdata_file_processing_command=process-service-perfdata-file
+<% if defined?(@host_perfdata_file_processing_command) -%>
+host_perfdata_file_processing_command=<%= @host_perfdata_file_processing_command %>
+<% end -%>
+<% if defined?(@service_perfdata_file_processing_command) -%>
+service_perfdata_file_processing_command=<%= @service_perfdata_file_processing_command %>
+<% end -%>
 
 
 
@@ -916,6 +964,12 @@ process_performance_data=<%= scope.lookupvar('process_performance_data') %>
 
 #host_perfdata_process_empty_results=1
 #service_perfdata_process_empty_results=1
+<% if defined?(@host_perfdata_process_empty_results) -%>
+host_perfdata_process_empty_results=<%= @host_perfdata_process_empty_results %>
+<% end -%>
+<% if defined?(@service_perfdata_process_empty_results) -%>
+service_perfdata_process_empty_results=<%= @service_perfdata_process_empty_results %>
+<% end -%>
 
 
 # OBSESS OVER SERVICE CHECKS OPTION
@@ -939,6 +993,9 @@ obsess_over_services=<%= scope.lookupvar('obsess_over_services') %>
 # more information on implementing distributed monitoring.
 
 #ocsp_command=somecommand
+<% if defined?(@ocsp_command) -%>
+ocsp_command=<%= @ocsp_command %>
+<% end -%>
 
 
 
@@ -963,6 +1020,9 @@ obsess_over_hosts=<%= scope.lookupvar('obsess_over_hosts') %>
 # more information on implementing distributed monitoring.
 
 #ochp_command=somecommand
+<% if defined?(@ochp_command) -%>
+ochp_command=<%= @ochp_command %>
+<% end -%>
 
 
 
@@ -1138,6 +1198,9 @@ date_format=<%= scope.lookupvar('date_format') %>
 
 #use_timezone=US/Mountain
 #use_timezone=Australia/Brisbane
+<% if defined?(@use_timezone) -%>
+use_timezone=<%= @use_timezone %>
+<% end -%>
 
 
 
@@ -1284,6 +1347,9 @@ enable_environment_macros=<%= scope.lookupvar('enable_environment_macros') %>
 #        0 - Do not free memory in child processes
 
 #free_child_process_memory=1
+<% if defined?(@free_child_process_memory) -%>
+free_child_process_memory=<%= @free_child_process_memory %>
+<% end -%>
 
 
 
@@ -1299,6 +1365,9 @@ enable_environment_macros=<%= scope.lookupvar('enable_environment_macros') %>
 #        0 - Child processes fork() just once
 
 #child_processes_fork_twice=1
+<% if defined?(@child_processes_fork_twice) -%>
+child_processes_fork_twice=<%= @child_processes_fork_twice %>
+<% end -%>
 
 
 

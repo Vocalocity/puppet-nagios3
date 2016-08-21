@@ -82,6 +82,7 @@ class nagios3::params {
       $auto_rescheduling_interval                  = 30
       $auto_rescheduling_window                    = 180
       $bare_update_check                           = 0
+      $broker_module                               = []
       $cached_host_check_horizon                   = 15
       $cached_service_check_horizon                = 15
       $cfg_dir                                     = [ '/etc/nagios/conf.d', ]
@@ -100,6 +101,7 @@ class nagios3::params {
       $check_result_path                           = '/var/log/nagios/spool/checkresults'
       $check_result_reaper_frequency               = 10
       $check_service_freshness                     = 1
+      $child_processes_fork_twice                  = undef
       $command_check_interval                      = '-1'
       $command_file                                = '/var/spool/nagios/cmd/nagios.cmd'
       $daemon_dumps_core                           = 0
@@ -119,11 +121,21 @@ class nagios3::params {
       $execute_host_checks                         = 1
       $execute_service_checks                      = 1
       $external_command_buffer_slots               = 4096
+      $free_child_process_memory                   = undef
+      $global_host_event_handler                   = undef
+      $global_service_event_handler                = undef
       $high_host_flap_threshold                    = 20.0
       $high_service_flap_threshold                 = 20.0
       $host_check_timeout                          = 30
       $host_freshness_check_interval               = 60
       $host_inter_check_delay_method               = 's'
+      $host_perfdata_command                       = undef
+      $host_perfdata_file                          = undef
+      $host_perfdata_file_mode                     = undef
+      $host_perfdata_file_processing_command       = undef
+      $host_perfdata_file_processing_interval      = undef
+      $host_perfdata_file_template                 = undef
+      $host_perfdata_process_empty_results         = undef
       $illegal_macro_output_chars                  = '`~$&|\'"<>'
       $illegal_object_name_chars                   = '`~!$%^&*|\'"<>?,()='
       $interval_length                             = 60
@@ -152,6 +164,8 @@ class nagios3::params {
       $object_cache_file                           = '/var/log/nagios/objects.cache'
       $obsess_over_hosts                           = 0
       $obsess_over_services                        = 0
+      $ochp_command                                = undef
+      $ocsp_command                                = undef
       $ocsp_timeout                                = 5
       $p1_file                                     = '/usr/sbin/p1.pl'
       $passive_host_checks_are_soft                = 0
@@ -172,6 +186,13 @@ class nagios3::params {
       $service_freshness_check_interval            = 60
       $service_inter_check_delay_method            = 's'
       $service_interleave_factor                   = 's'
+      $service_perfdata_command                    = undef
+      $service_perfdata_file                       = undef
+      $service_perfdata_file_mode                  = undef
+      $service_perfdata_file_processing_command    = undef
+      $service_perfdata_file_processing_interval   = undef
+      $service_perfdata_file_template              = undef
+      $service_perfdata_process_empty_results      = undef
       $sleep_time                                  = 0.25
       $soft_state_dependencies                     = 0
       $state_retention_file                        = '/var/log/nagios/retention.dat'
@@ -179,6 +200,7 @@ class nagios3::params {
       $status_update_interval                      = 10
       $temp_file                                   = '/var/log/nagios/nagios.tmp'
       $temp_path                                   = '/tmp'
+      $time_change_threshold                       = undef
       $translate_passive_host_checks               = 0
       $use_aggressive_host_checking                = 0
       $use_embedded_perl_implicitly                = 1
@@ -187,6 +209,7 @@ class nagios3::params {
       $use_retained_program_state                  = 1
       $use_retained_scheduling_info                = 1
       $use_syslog                                  = 1
+      $use_timezone                                = undef
       $use_true_regexp_matching                    = 0
     } #RedHat
     default: {

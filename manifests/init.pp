@@ -84,6 +84,7 @@ class nagios3 (
   $auto_rescheduling_interval                  = $nagios3::params::auto_rescheduling_interval,
   $auto_rescheduling_window                    = $nagios3::params::auto_rescheduling_window,
   $bare_update_check                           = $nagios3::params::bare_update_check,
+  $broker_module                               = $nagios3::params::broker_module,
   $cached_host_check_horizon                   = $nagios3::params::cached_host_check_horizon,
   $cached_service_check_horizon                = $nagios3::params::cached_service_check_horizon,
   $cfg_dir                                     = $nagios3::params::cfg_dir,
@@ -96,6 +97,7 @@ class nagios3 (
   $check_result_path                           = $nagios3::params::check_result_path,
   $check_result_reaper_frequency               = $nagios3::params::check_result_reaper_frequency,
   $check_service_freshness                     = $nagios3::params::check_service_freshness,
+  $child_processes_fork_twice                  = $nagios3::params::child_processes_fork_twice,
   $command_check_interval                      = $nagios3::params::command_check_interval,
   $command_file                                = $nagios3::params::command_file,
   $daemon_dumps_core                           = $nagios3::params::daemon_dumps_core,
@@ -115,12 +117,22 @@ class nagios3 (
   $execute_host_checks                         = $nagios3::params::execute_host_checks,
   $execute_service_checks                      = $nagios3::params::execute_service_checks,
   $external_command_buffer_slots               = $nagios3::params::external_command_buffer_slots,
+  $free_child_process_memory                   = $nagios3::params::free_child_process_memory,
+  $global_host_event_handler                   = $nagios3::params::global_host_event_handler,
+  $global_service_event_handler                = $nagios3::params::global_service_event_handler,
 
   $high_host_flap_threshold                    = $nagios3::params::high_host_flap_threshold,
   $high_service_flap_threshold                 = $nagios3::params::high_service_flap_threshold,
   $host_check_timeout                          = $nagios3::params::host_check_timeout,
   $host_freshness_check_interval               = $nagios3::params::host_freshness_check_interval,
   $host_inter_check_delay_method               = $nagios3::params::host_inter_check_delay_method,
+  $host_perfdata_command                       = $nagios3::params::host_perfdata_command,
+  $host_perfdata_file                          = $nagios3::params::host_perfdata_file,
+  $host_perfdata_file_mode                     = $nagios3::params::host_perfdata_file_mode,
+  $host_perfdata_file_processing_command       = $nagios3::params::host_perfdata_file_processing_command,
+  $host_perfdata_file_processing_interval      = $nagios3::params::host_perfdata_file_processing_interval,
+  $host_perfdata_file_template                 = $nagios3::params::host_perfdata_file_template,
+  $host_perfdata_process_empty_results         = $nagios3::params::host_perfdata_process_empty_results,
 
   $illegal_macro_output_chars                  = $nagios3::params::illegal_macro_output_chars,
   $illegal_object_name_chars                   = $nagios3::params::illegal_object_name_chars,
@@ -153,6 +165,8 @@ class nagios3 (
 
   $obsess_over_hosts                           = $nagios3::params::obsess_over_hosts,
   $obsess_over_services                        = $nagios3::params::obsess_over_services,
+  $ochp_command                                = $nagios3::params::ochp_command,
+  $ocsp_command                                = $nagios3::params::ocsp_command,
   $ocsp_timeout                                = $nagios3::params::ocsp_timeout,
   $object_cache_file                           = $nagios3::params::object_cache_file,
   $p1_file                                     = $nagios3::params::p1_file,
@@ -175,6 +189,13 @@ class nagios3 (
   $service_freshness_check_interval            = $nagios3::params::service_freshness_check_interval,
   $service_inter_check_delay_method            = $nagios3::params::service_inter_check_delay_method,
   $service_interleave_factor                   = $nagios3::params::service_interleave_factor,
+  $service_perfdata_command                    = $nagios3::params::service_perfdata_command,
+  $service_perfdata_file                       = $nagios3::params::service_perfdata_file,
+  $service_perfdata_file_mode                  = $nagios3::params::service_perfdata_file_mode,
+  $service_perfdata_file_processing_command    = $nagios3::params::service_perfdata_file_processing_command,
+  $service_perfdata_file_processing_interval   = $nagios3::params::service_perfdata_file_processing_interval,
+  $service_perfdata_file_template              = $nagios3::params::service_perfdata_file_template,
+  $service_perfdata_process_empty_results      = $nagios3::params::service_perfdata_process_empty_results,
   $sleep_time                                  = $nagios3::params::sleep_time,
   $soft_state_dependencies                     = $nagios3::params::soft_state_dependencies,
   $state_retention_file                        = $nagios3::params::state_retention_file,
@@ -182,6 +203,7 @@ class nagios3 (
   $status_update_interval                      = $nagios3::params::status_update_interval,
   $temp_file                                   = $nagios3::params::temp_file,
   $temp_path                                   = $nagios3::params::temp_path,
+  $time_change_threshold                       = $nagios3::params::time_change_threshold,
   $translate_passive_host_checks               = $nagios3::params::translate_passive_host_checks,
   $use_aggressive_host_checking                = $nagios3::params::use_aggressive_host_checking,
   $use_embedded_perl_implicitly                = $nagios3::params::use_embedded_perl_implicitly,
@@ -190,6 +212,7 @@ class nagios3 (
   $use_retained_program_state                  = $nagios3::params::use_retained_program_state,
   $use_retained_scheduling_info                = $nagios3::params::use_retained_scheduling_info,
   $use_syslog                                  = $nagios3::params::use_syslog,
+  $use_timezone                                = $nagios3::params::use_timezone,
   $use_true_regexp_matching                    = $nagios3::params::use_true_regexp_matching,
 
 ) inherits nagios3::params {
@@ -220,6 +243,7 @@ class nagios3 (
   validate_integer($auto_rescheduling_interval)
   validate_integer($auto_rescheduling_window)
   validate_integer($bare_update_check)
+  validate_array($broker_module)
   validate_integer($cached_host_check_horizon)
   validate_integer($cached_service_check_horizon)
   validate_array($cfg_dir)
@@ -232,6 +256,9 @@ class nagios3 (
   validate_string($check_result_path)
   validate_integer($check_result_reaper_frequency)
   validate_integer($check_service_freshness)
+  if $child_processes_fork_twice != undef {
+    validate_integer($child_processes_fork_twice)
+  }
   validate_string($command_check_interval)
   validate_string($command_file)
 
@@ -253,12 +280,42 @@ class nagios3 (
   validate_integer($execute_host_checks)
   validate_integer($execute_service_checks)
   validate_integer($external_command_buffer_slots)
+  if $free_child_process_memory != undef {
+    validate_integer($free_child_process_memory)
+  }
+  if $global_host_event_handler != undef {
+    validate_string($global_host_event_handler)
+  }
+  if $global_service_event_handler != undef {
+    validate_string($global_service_event_handler)
+  }
 
   validate_numeric($high_host_flap_threshold)
   validate_numeric($high_service_flap_threshold)
   validate_integer($host_check_timeout)
   validate_integer($host_freshness_check_interval)
   validate_string($host_inter_check_delay_method)
+  if $host_perfdata_command != undef {
+    validate_string($host_perfdata_command)
+  }
+  if $host_perfdata_file != undef {
+    validate_string($host_perfdata_file)
+  }
+  if $host_perfdata_file_mode != undef {
+    validate_string($host_perfdata_file_mode)
+  }
+  if $host_perfdata_file_processing_command != undef {
+    validate_string($host_perfdata_file_processing_command)
+  }
+  if $host_perfdata_file_processing_interval != undef {
+    validate_integer($host_perfdata_file_processing_interval)
+  }
+  if $host_perfdata_file_template != undef {
+    validate_string($host_perfdata_file_template)
+  }
+  if $host_perfdata_process_empty_results != undef {
+    validate_integer($host_perfdata_process_empty_results)
+  }
 
   validate_string($illegal_macro_output_chars)
   validate_string($illegal_object_name_chars)
@@ -291,6 +348,12 @@ class nagios3 (
 
   validate_integer($obsess_over_hosts)
   validate_integer($obsess_over_services)
+  if $ochp_command != undef {
+    validate_string($ochp_command)
+  }
+  if $ocsp_command != undef {
+    validate_string($ocsp_command)
+  }
   validate_integer($ocsp_timeout)
   validate_string($object_cache_file)
   validate_string($p1_file)
@@ -312,6 +375,27 @@ class nagios3 (
   validate_integer($service_freshness_check_interval)
   validate_string($service_inter_check_delay_method)
   validate_string($service_interleave_factor)
+  if $service_perfdata_command != undef {
+  validate_string($service_perfdata_command)
+  }
+  if $service_perfdata_file != undef {
+    validate_string($service_perfdata_file)
+  }
+  if $service_perfdata_file_mode != undef {
+    validate_string($service_perfdata_file_mode)
+  }
+  if $service_perfdata_file_processing_command != undef {
+    validate_string($service_perfdata_file_processing_command)
+  }
+  if $service_perfdata_file_processing_interval != undef {
+    validate_integer($service_perfdata_file_processing_interval)
+  }
+  if $service_perfdata_file_template != undef {
+    validate_string($service_perfdata_file_template)
+  }
+  if $service_perfdata_process_empty_results != undef {
+    validate_integer($service_perfdata_process_empty_results)
+  }
   validate_numeric($sleep_time)
   validate_integer($soft_state_dependencies)
   validate_string($state_retention_file)
@@ -319,6 +403,10 @@ class nagios3 (
   validate_integer($status_update_interval)
   validate_string($temp_file)
   validate_string($temp_path)
+  if $time_change_threshold != undef {
+    validate_integer($time_change_threshold)
+  }
+
   validate_integer($translate_passive_host_checks)
   validate_integer($use_aggressive_host_checking)
   validate_integer($use_embedded_perl_implicitly)
@@ -327,6 +415,9 @@ class nagios3 (
   validate_integer($use_retained_program_state)
   validate_integer($use_retained_scheduling_info)
   validate_integer($use_syslog)
+  if $use_timezone != undef {
+    validate_string($use_timezone)
+  }
   validate_integer($use_true_regexp_matching)
 
   $package_ensure = $install ? {
