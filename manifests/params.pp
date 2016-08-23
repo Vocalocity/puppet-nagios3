@@ -44,25 +44,17 @@ class nagios3::params {
       $package_ensure         = 'installed'
       $package_name           = 'nagios'
 
-      $config_dir             = '/etc/nagios'
-      $config_dir_owner       = 'root'
-      $config_dir_group       = 'root'
-      $config_dir_mode        = '0755'
+      $config_dir        = '/etc/nagios'
+      $config_dir_owner  = 'root'
+      $config_dir_group  = 'root'
+      $config_dir_mode   = '0775'
+      $config_file       = "${config_dir}/nagios.cfg"
+      $config_file_owner = 'root'
+      $config_file_group = 'root'
+      $config_file_mode  = '0664'
 
-
-      $config_dir_d           = "${config_dir}/conf.d"
-      $config_objects_dir     = "${config_dir}/objects"
-      $config_private_dir     = "${config_dir}/private"
-
-      $cgi_config             = "${config_dir}/cgi.conf"
-
-      $nagios_config          = "${config_dir}/nagios.cfg"
-      $nagios_config_template = 'nagios.cfg.erb'
-      $nagios_config_owner    = 'root'
-      $nagios_config_group    = 'root'
-      $nagios_config_mode     = '0664'
-
-      $passwd_config          = "${config_dir}/passwd"
+      $cgi_config               = "${config_dir}/cgi.conf"
+      $passwd_config            = "${config_dir}/passwd"
 
       # Settings from nagios.cfg
       # Default values for nagios.cfg.  Taken from the EPEL rpm.

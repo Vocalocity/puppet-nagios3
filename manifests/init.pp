@@ -48,23 +48,18 @@ class nagios3 (
   $running      = true,
   $atboot       = true,
 
-  # Configuration file handing options
-  $purge_configs = false,
-
-
-  # Nagios installation options
-
   # Nagioss configuration directorys
-  $config_dir         = $nagios3::params::config_dir,
+  $config_dir          = $nagios3::params::config_dir,
+  $config_dir_owner    = $nagios3::params::config_dir_owner,
+  $config_dir_group    = $nagios3::params::config_dir_group,
+  $config_dir_mode     = $nagios3::params::config_dir_mode,
+  $config_file         = $nagios3::params::config_file,
+  $config_file_owner   = $nagios3::params::config_file_owner,
+  $config_file_group   = $nagios3::params::config_file_group,
+  $config_file_mode    = $nagios3::params::config_file_mode,
 
-
-  $config_dir_d       = $nagios3::params::config_dir_d,
-  $config_objects_dir = $nagios3::params::config_objects_dir,
-  $config_private_dir = $nagios3::params::config_private_dir,
-
-  $cgi_config         = $nagios3::params::cgi_config,
-  $nagios_config      = $nagios3::params::nagios_config,
-  $passwd_config      = $nagios3::params::passwd_config,
+  $cgi_config          = $nagios3::params::cgi_config,
+  $passwd_config       = $nagios3::params::passwd_config,
 
   # nagios.cfg settings
   $accept_passive_host_checks                  = $nagios3::params::accept_passive_host_checks,
@@ -210,17 +205,19 @@ class nagios3 (
 ) inherits nagios3::params {
 
   # Parameter validation
-  validate_bool($running)
   validate_bool($atboot)
-  validate_bool($purge_configs)
+  validate_bool($running)
+  validate_string($cgi_config)
+  validate_string($config_dir)
+  validate_string($config_dir_group)
+  validate_string($config_dir_mode)
+  validate_string($config_dir_owner)
+  validate_string($config_file)
+  validate_string($config_file_group)
+  validate_string($config_file_mode)
+  validate_string($config_file_owner)
   validate_string($package_ensure)
   validate_string($package_name)
-  validate_string($config_dir)
-  validate_string($config_dir_d)
-  validate_string($config_objects_dir)
-  validate_string($config_private_dir)
-  validate_string($cgi_config)
-  validate_string($nagios_config)
   validate_string($passwd_config)
 
   # nagios.cfg parameter validation
@@ -427,25 +424,23 @@ class nagios3 (
   # Configuration directory handling
   file { $config_dir:
     ensure  => directory,
-    owner   => $nagios3::params::config_dir_owner,
-    group   => $nagios3::params::config_dir_group,
-    mode    => $nagios3::params::config_dir_mode,
-    #purge   => $nagios3::purge,
+    owner   => $config_dir_owner,
+    group   => $config_dir_group,
+    mode    => $config_dir_mode,
     force   => true,
-    recurse => true,
     require => Package[$package_name],
   }
 
   # Configuration file handling
-  file { $nagios3::params::nagios_config:
+  file { $config_file:
     ensure  => file,
-    owner   => $nagios3::params::nagios_config_owner,
-    group   => $nagios3::params::nagios_config_group,
-    mode    => $nagios3::params::nagios_config_mode,
-    content => template("nagios3/${nagios3::params::nagios_config_template}"),
+    owner   => $config_file_owner,
+    group   => $config_file_group,
+    mode    => $config_file_mode,
+    content => template("${module_name}/nagios.cfg.erb"),
     require => [
       Package[$package_name],
-      File[$nagios3::params::config_dir]
+      File[$config_dir]
     ],
   }
 
