@@ -53,8 +53,47 @@ class nagios3::params {
       $config_file_group = 'root'
       $config_file_mode  = '0664'
 
-      $cgi_config               = "${config_dir}/cgi.conf"
       $passwd_config            = "${config_dir}/passwd"
+
+      $cgi_config_file                              = "${config_dir}/cgi.cfg"
+      $cgi_action_url_target                        = '_blank'
+      $cgi_authorized_for_all_host_commands         = [ 'nagiosadmin' ]
+      $cgi_authorized_for_all_hosts                 = [ 'nagiosadmin' ]
+      $cgi_authorized_for_all_service_commands      = [ 'nagiosadmin' ]
+      $cgi_authorized_for_all_services              = [ 'nagiosadmin' ]
+      $cgi_authorized_for_configuration_information = [ 'nagiosadmin' ]
+      $cgi_authorized_for_read_only                 = []
+      $cgi_authorized_for_system_commands           = [ 'nagiosadmin' ]
+      $cgi_authorized_for_system_information        = [ 'nagiosadmin' ]
+      $cgi_color_transparency_index_b               = 255
+      $cgi_color_transparency_index_g               = 255
+      $cgi_color_transparency_index_r               = 255
+      $cgi_default_statusmap_layout                 = 5
+      $cgi_default_statuswrl_layout                 = 4
+      $cgi_default_user_name                        = undef
+      $cgi_enable_splunk_integration                = 0
+      $cgi_escape_html_tags                         = 1
+      $cgi_host_down_sound                          = undef
+      $cgi_host_unreachable_sound                   = undef
+      $cgi_lock_author_names                        = 1
+      $cgi_main_config_file                         = '/etc/nagios/nagios.cfg'
+      $cgi_normal_sound                             = undef
+      $cgi_notes_url_target                         = '_blank'
+      $cgi_physical_html_path                       = '/usr/share/nagios/html'
+      $cgi_ping_syntax                              = '/bin/ping -n -U -c 5 $HOSTADDRESS$'
+      $cgi_refresh_rate                             = 90
+      $cgi_result_limit                             = 100
+      $cgi_service_critical_sound                   = undef
+      $cgi_service_unknown_sound                    = undef
+      $cgi_service_warning_sound                    = undef
+      $cgi_show_context_help                        = 0
+      $cgi_splunk_url                               = 'http://127.0.0.1:8000/'
+      $cgi_statusmap_background_image               = undef
+      $cgi_statuswrl_include                        = undef
+      $cgi_url_html_path                            = '/nagios'
+      $cgi_use_authentication                       = 1
+      $cgi_use_pending_states                       = 1
+      $cgi_use_ssl_authentication                   = 0
 
       # Settings from nagios.cfg
       # Default values for nagios.cfg.  Taken from the EPEL rpm.

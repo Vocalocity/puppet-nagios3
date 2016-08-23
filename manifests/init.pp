@@ -58,8 +58,47 @@ class nagios3 (
   $config_file_group   = $nagios3::params::config_file_group,
   $config_file_mode    = $nagios3::params::config_file_mode,
 
-  $cgi_config          = $nagios3::params::cgi_config,
+  $cgi_config_file          = $nagios3::params::cgi_config_file,
   $passwd_config       = $nagios3::params::passwd_config,
+
+  $cgi_action_url_target                        = $nagios3::params::cgi_action_url_target,
+  $cgi_authorized_for_all_host_commands         = $nagios3::params::cgi_authorized_for_all_host_commands,
+  $cgi_authorized_for_all_hosts                 = $nagios3::params::cgi_authorized_for_all_hosts,
+  $cgi_authorized_for_all_service_commands      = $nagios3::params::cgi_authorized_for_all_service_commands,
+  $cgi_authorized_for_all_services              = $nagios3::params::cgi_authorized_for_all_services,
+  $cgi_authorized_for_configuration_information = $nagios3::params::cgi_authorized_for_configuration_information,
+  $cgi_authorized_for_read_only                 = $nagios3::params::cgi_authorized_for_read_only,
+  $cgi_authorized_for_system_commands           = $nagios3::params::cgi_authorized_for_system_commands,
+  $cgi_authorized_for_system_information        = $nagios3::params::cgi_authorized_for_system_information,
+  $cgi_color_transparency_index_b               = $nagios3::params::cgi_color_transparency_index_b,
+  $cgi_color_transparency_index_g               = $nagios3::params::cgi_color_transparency_index_g,
+  $cgi_color_transparency_index_r               = $nagios3::params::cgi_color_transparency_index_r,
+  $cgi_default_statusmap_layout                 = $nagios3::params::cgi_default_statusmap_layout,
+  $cgi_default_statuswrl_layout                 = $nagios3::params::cgi_default_statuswrl_layout,
+  $cgi_default_user_name                        = $nagios3::params::cgi_default_user_name,
+  $cgi_enable_splunk_integration                = $nagios3::params::cgi_enable_splunk_integration,
+  $cgi_escape_html_tags                         = $nagios3::params::cgi_escape_html_tags,
+  $cgi_host_down_sound                          = $nagios3::params::cgi_host_down_sound,
+  $cgi_host_unreachable_sound                   = $nagios3::params::cgi_host_unreachable_sound,
+  $cgi_lock_author_names                        = $nagios3::params::cgi_lock_author_names,
+  $cgi_main_config_file                         = $nagios3::params::cgi_main_config_file,
+  $cgi_normal_sound                             = $nagios3::params::cgi_normal_sound,
+  $cgi_notes_url_target                         = $nagios3::params::cgi_notes_url_target,
+  $cgi_physical_html_path                       = $nagios3::params::cgi_physical_html_path,
+  $cgi_ping_syntax                              = $nagios3::params::cgi_ping_syntax,
+  $cgi_refresh_rate                             = $nagios3::params::cgi_refresh_rate,
+  $cgi_result_limit                             = $nagios3::params::cgi_result_limit,
+  $cgi_service_critical_sound                   = $nagios3::params::cgi_service_critical_sound,
+  $cgi_service_unknown_sound                    = $nagios3::params::cgi_service_unknown_sound,
+  $cgi_service_warning_sound                    = $nagios3::params::cgi_service_warning_sound,
+  $cgi_show_context_help                        = $nagios3::params::cgi_show_context_help,
+  $cgi_splunk_url                               = $nagios3::params::cgi_splunk_url,
+  $cgi_statusmap_background_image               = $nagios3::params::cgi_statusmap_background_image,
+  $cgi_statuswrl_include                        = $nagios3::params::cgi_statuswrl_include,
+  $cgi_url_html_path                            = $nagios3::params::cgi_url_html_path,
+  $cgi_use_authentication                       = $nagios3::params::cgi_use_authentication,
+  $cgi_use_pending_states                       = $nagios3::params::cgi_use_pending_states,
+  $cgi_use_ssl_authentication                   = $nagios3::params::cgi_use_ssl_authentication,
 
   # nagios.cfg settings
   $accept_passive_host_checks                  = $nagios3::params::accept_passive_host_checks,
@@ -207,7 +246,7 @@ class nagios3 (
   # Parameter validation
   validate_bool($atboot)
   validate_bool($running)
-  validate_string($cgi_config)
+  validate_string($cgi_config_file)
   validate_string($config_dir)
   validate_string($config_dir_group)
   validate_string($config_dir_mode)
@@ -219,6 +258,45 @@ class nagios3 (
   validate_string($package_ensure)
   validate_string($package_name)
   validate_string($passwd_config)
+
+  validate_string($cgi_action_url_target)
+  validate_array($cgi_authorized_for_all_host_commands)
+  validate_array($cgi_authorized_for_all_hosts)
+  validate_array($cgi_authorized_for_all_service_commands)
+  validate_array($cgi_authorized_for_all_services)
+  validate_array($cgi_authorized_for_configuration_information)
+  validate_array($cgi_authorized_for_read_only)
+  validate_array($cgi_authorized_for_system_commands)
+  validate_array($cgi_authorized_for_system_information)
+  validate_integer($cgi_color_transparency_index_b)
+  validate_integer($cgi_color_transparency_index_g)
+  validate_integer($cgi_color_transparency_index_r)
+  validate_integer($cgi_default_statusmap_layout)
+  validate_integer($cgi_default_statuswrl_layout)
+  validate_string($cgi_default_user_name)
+  validate_integer($cgi_enable_splunk_integration)
+  validate_integer($cgi_escape_html_tags)
+  validate_string($cgi_host_down_sound)
+  validate_string($cgi_host_unreachable_sound)
+  validate_integer($cgi_lock_author_names)
+  validate_string($cgi_main_config_file)
+  validate_string($cgi_normal_sound)
+  validate_string($cgi_notes_url_target)
+  validate_string($cgi_physical_html_path)
+  validate_string($cgi_ping_syntax)
+  validate_integer($cgi_refresh_rate)
+  validate_integer($cgi_result_limit)
+  validate_string($cgi_service_critical_sound)
+  validate_string($cgi_service_unknown_sound)
+  validate_string($cgi_service_warning_sound)
+  validate_integer($cgi_show_context_help)
+  validate_string($cgi_splunk_url)
+  validate_string($cgi_statusmap_background_image)
+  validate_string($cgi_statuswrl_include)
+  validate_string($cgi_url_html_path)
+  validate_integer($cgi_use_authentication)
+  validate_integer($cgi_use_pending_states)
+  validate_integer($cgi_use_ssl_authentication)
 
   # nagios.cfg parameter validation
   validate_integer($accept_passive_host_checks)
@@ -442,6 +520,15 @@ class nagios3 (
       Package[$package_name],
       File[$config_dir]
     ],
+  }
+
+  file { $cgi_config_file:
+    ensure  => file,
+    owner   => $config_file_owner,
+    group   => $config_file_group,
+    mode    => $config_file_mode,
+    content => template("${module_name}/cgi.cfg.erb"),
+    require => File[$config_dir],
   }
 
 }
