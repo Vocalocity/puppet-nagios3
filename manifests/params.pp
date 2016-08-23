@@ -64,12 +64,6 @@ class nagios3::params {
 
       $passwd_config          = "${config_dir}/passwd"
 
-      #$user_name             = 'nagios'  # See nagios_user
-      $user_home              = '/var/spool/nagios'
-      $user_shell             = '/sbin/nologin'
-
-      #$group_name            = 'nagios' # See nagios_group
-
       # Settings from nagios.cfg
       # Default values for nagios.cfg.  Taken from the EPEL rpm.
       $accept_passive_host_checks                  = 1

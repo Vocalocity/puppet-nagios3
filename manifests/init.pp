@@ -66,15 +66,6 @@ class nagios3 (
   $nagios_config      = $nagios3::params::nagios_config,
   $passwd_config      = $nagios3::params::passwd_config,
 
-  # see nagios_user
-  #$user_name         = $nagios3::params::user_name,
-
-  $user_home          = $nagios3::params::user_home,
-  $user_shell         = $nagios3::params::user_shell,
-
-  # see nagios_group
-  #$group_name        = $nagios3::params::group_name,
-
   # nagios.cfg settings
   $accept_passive_host_checks                  = $nagios3::params::accept_passive_host_checks,
   $accept_passive_service_checks               = $nagios3::params::accept_passive_service_checks,
@@ -231,8 +222,6 @@ class nagios3 (
   validate_string($cgi_config)
   validate_string($nagios_config)
   validate_string($passwd_config)
-  validate_string($user_home)
-  validate_string($user_shell)
 
   # nagios.cfg parameter validation
   validate_integer($accept_passive_host_checks)
