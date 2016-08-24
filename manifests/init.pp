@@ -1,67 +1,27 @@
 # == Class: nagios3
 #
-# Puppet module for the installation and configuration of a Nagios 3
-# server.
-#
-# This modules takes advanage of PuppetDB to allow Nagios targets to
-# push their configuration to the Nagios server.
-#
-# === Parameters
-#
-# Document parameters here.
-#
-# [*sample_parameter*]
-#   Explanation of what this parameter affects and what it defaults to.
-#   e.g. "Specify one or more upstream ntp servers as an array."
-#
-# === Variables
-#
-# Here you should define a list of variables that this module would require.
-#
-# [*sample_variable*]
-#   Explanation of how this variable affects the funtion of this class and if
-#   it has a default. e.g. "The parameter enc_ntp_servers must be set by the
-#   External Node Classifier as a comma separated list of hostnames." (Note,
-#   global variables should be avoided in favor of class parameters as
-#   of Puppet 2.6.)
-#
-# === Examples
-#
-#  class { 'nagios3':
-#    servers => [ 'pool.ntp.org', 'ntp.local.company.com' ],
-#  }
-#
-# === Authors
-#
-# Author Name <author@domain.com>
-#
-# === Copyright
-#
-# Copyright 2016 Your name here, unless otherwise noted.
+# Puppet module to install Nagios 3.
 #
 class nagios3 (
 
-  # Install the packages?
-  $package_ensure = $nagios3::params::package_ensure,
-  $package_name   = $nagios3::params::package_name,
+  # Installation
+  $cgi_config_file                              = $nagios3::params::cgi_config_file,
+  $config_dir                                   = $nagios3::params::config_dir,
+  $config_dir_group                             = $nagios3::params::config_dir_group,
+  $config_dir_mode                              = $nagios3::params::config_dir_mode,
+  $config_dir_owner                             = $nagios3::params::config_dir_owner,
+  $config_file                                  = $nagios3::params::config_file,
+  $config_file_group                            = $nagios3::params::config_file_group,
+  $config_file_mode                             = $nagios3::params::config_file_mode,
+  $config_file_owner                            = $nagios3::params::config_file_owner,
+  $package_ensure                               = $nagios3::params::package_ensure,
+  $package_name                                 = $nagios3::params::package_name,
+  $passwd_config                                = $nagios3::params::passwd_config,
+  $service_enable                               = $nagios3::params::service_enable,
+  $service_ensure                               = $nagios3::params::service_ensure,
+  $service_file                                 = $nagios3::params::service_file,
 
-  $service_enable = $nagios3::params::service_enable,
-  $service_ensure = $nagios3::params::service_ensure,
-  $service_file   = $nagios3::params::service_file,
-
-  # Nagioss configuration directorys
-  $config_dir          = $nagios3::params::config_dir,
-  $config_dir_owner    = $nagios3::params::config_dir_owner,
-  $config_dir_group    = $nagios3::params::config_dir_group,
-  $config_dir_mode     = $nagios3::params::config_dir_mode,
-  $config_file         = $nagios3::params::config_file,
-  $config_file_owner   = $nagios3::params::config_file_owner,
-  $config_file_group   = $nagios3::params::config_file_group,
-  $config_file_mode    = $nagios3::params::config_file_mode,
-
-  $cgi_config_file          = $nagios3::params::cgi_config_file,
-  $passwd_config       = $nagios3::params::passwd_config,
-
+  # cgi.cfg
   $cgi_action_url_target                        = $nagios3::params::cgi_action_url_target,
   $cgi_authorized_for_all_host_commands         = $nagios3::params::cgi_authorized_for_all_host_commands,
   $cgi_authorized_for_all_hosts                 = $nagios3::params::cgi_authorized_for_all_hosts,
@@ -101,150 +61,141 @@ class nagios3 (
   $cgi_use_pending_states                       = $nagios3::params::cgi_use_pending_states,
   $cgi_use_ssl_authentication                   = $nagios3::params::cgi_use_ssl_authentication,
 
-  # nagios.cfg settings
-  $accept_passive_host_checks                  = $nagios3::params::accept_passive_host_checks,
-  $accept_passive_service_checks               = $nagios3::params::accept_passive_service_checks,
-  $additional_freshness_latency                = $nagios3::params::additional_freshness_latency,
-  $admin_email                                 = $nagios3::params::admin_email,
-  $admin_pager                                 = $nagios3::params::admin_pager,
-  $auto_reschedule_checks                      = $nagios3::params::auto_reschedule_checks,
-  $auto_rescheduling_interval                  = $nagios3::params::auto_rescheduling_interval,
-  $auto_rescheduling_window                    = $nagios3::params::auto_rescheduling_window,
-  $bare_update_check                           = $nagios3::params::bare_update_check,
-  $broker_module                               = $nagios3::params::broker_module,
-  $cached_host_check_horizon                   = $nagios3::params::cached_host_check_horizon,
-  $cached_service_check_horizon                = $nagios3::params::cached_service_check_horizon,
-  $cfg_dir                                     = $nagios3::params::cfg_dir,
-  $cfg_file                                    = $nagios3::params::cfg_file,
-  $check_external_commands                     = $nagios3::params::check_external_commands,
-  $check_for_orphaned_hosts                    = $nagios3::params::check_for_orphaned_hosts,
-  $check_for_orphaned_services                 = $nagios3::params::check_for_orphaned_services,
-  $check_for_updates                           = $nagios3::params::check_for_updates,
-  $check_host_freshness                        = $nagios3::params::check_host_freshness,
-  $check_result_path                           = $nagios3::params::check_result_path,
-  $check_result_reaper_frequency               = $nagios3::params::check_result_reaper_frequency,
-  $check_service_freshness                     = $nagios3::params::check_service_freshness,
-  $child_processes_fork_twice                  = $nagios3::params::child_processes_fork_twice,
-  $command_check_interval                      = $nagios3::params::command_check_interval,
-  $command_file                                = $nagios3::params::command_file,
-  $daemon_dumps_core                           = $nagios3::params::daemon_dumps_core,
-  $date_format                                 = $nagios3::params::date_format,
-  $debug_file                                  = $nagios3::params::debug_file,
-  $debug_level                                 = $nagios3::params::debug_level,
-  $debug_verbosity                             = $nagios3::params::debug_verbosity,
-  $enable_embedded_perl                        = $nagios3::params::enable_embedded_perl,
-  $enable_environment_macros                   = $nagios3::params::enable_environment_macros,
-  $enable_event_handlers                       = $nagios3::params::enable_event_handlers,
-  $enable_flap_detection                       = $nagios3::params::enable_flap_detection,
-  $enable_notifications                        = $nagios3::params::enable_notifications,
-  $enable_predictive_host_dependency_checks    = $nagios3::params::enable_predictive_host_dependency_checks,
-  $enable_predictive_service_dependency_checks = $nagios3::params::enable_predictive_service_dependency_checks,
-  $event_broker_options                        = $nagios3::params::event_broker_options,
-  $event_handler_timeout                       = $nagios3::params::event_handler_timeout,
-  $execute_host_checks                         = $nagios3::params::execute_host_checks,
-  $execute_service_checks                      = $nagios3::params::execute_service_checks,
-  $external_command_buffer_slots               = $nagios3::params::external_command_buffer_slots,
-  $free_child_process_memory                   = $nagios3::params::free_child_process_memory,
-  $global_host_event_handler                   = $nagios3::params::global_host_event_handler,
-  $global_service_event_handler                = $nagios3::params::global_service_event_handler,
-
-  $high_host_flap_threshold                    = $nagios3::params::high_host_flap_threshold,
-  $high_service_flap_threshold                 = $nagios3::params::high_service_flap_threshold,
-  $host_check_timeout                          = $nagios3::params::host_check_timeout,
-  $host_freshness_check_interval               = $nagios3::params::host_freshness_check_interval,
-  $host_inter_check_delay_method               = $nagios3::params::host_inter_check_delay_method,
-  $host_perfdata_command                       = $nagios3::params::host_perfdata_command,
-  $host_perfdata_file                          = $nagios3::params::host_perfdata_file,
-  $host_perfdata_file_mode                     = $nagios3::params::host_perfdata_file_mode,
-  $host_perfdata_file_processing_command       = $nagios3::params::host_perfdata_file_processing_command,
-  $host_perfdata_file_processing_interval      = $nagios3::params::host_perfdata_file_processing_interval,
-  $host_perfdata_file_template                 = $nagios3::params::host_perfdata_file_template,
-  $host_perfdata_process_empty_results         = $nagios3::params::host_perfdata_process_empty_results,
-
-  $illegal_macro_output_chars                  = $nagios3::params::illegal_macro_output_chars,
-  $illegal_object_name_chars                   = $nagios3::params::illegal_object_name_chars,
-  $interval_length                             = $nagios3::params::interval_length,
-
-  $lock_file                                   = $nagios3::params::lock_file,
-  $log_archive_path                            = $nagios3::params::log_archive_path,
-  $log_event_handlers                          = $nagios3::params::log_event_handlers,
-  $log_external_commands                       = $nagios3::params::log_external_commands,
-  $log_file                                    = $nagios3::params::log_file,
-  $log_host_retries                            = $nagios3::params::log_host_retries,
-  $log_initial_states                          = $nagios3::params::log_initial_states,
-  $log_notifications                           = $nagios3::params::log_notifications,
-  $log_passive_checks                          = $nagios3::params::log_passive_checks,
-  $log_rotation_method                         = $nagios3::params::log_rotation_method,
-  $log_service_retries                         = $nagios3::params::log_service_retries,
-  $low_host_flap_threshold                     = $nagios3::params::low_host_flap_threshold,
-  $low_service_flap_threshold                  = $nagios3::params::low_service_flap_threshold,
-
-  $max_check_result_file_age                   = $nagios3::params::max_check_result_file_age,
-  $max_check_result_reaper_time                = $nagios3::params::max_check_result_reaper_time,
-  $max_concurrent_checks                       = $nagios3::params::max_concurrent_checks,
-  $max_debug_file_size                         = $nagios3::params::max_debug_file_size,
-  $max_host_check_spread                       = $nagios3::params::max_host_check_spread,
-  $max_service_check_spread                    = $nagios3::params::max_service_check_spread,
-
-  $nagios_group                                = $nagios3::params::nagios_group,
-  $nagios_user                                 = $nagios3::params::nagios_user,
-  $notification_timeout                        = $nagios3::params::notification_timeout,
-
-  $obsess_over_hosts                           = $nagios3::params::obsess_over_hosts,
-  $obsess_over_services                        = $nagios3::params::obsess_over_services,
-  $ochp_command                                = $nagios3::params::ochp_command,
-  $ocsp_command                                = $nagios3::params::ocsp_command,
-  $ocsp_timeout                                = $nagios3::params::ocsp_timeout,
-  $object_cache_file                           = $nagios3::params::object_cache_file,
-  $p1_file                                     = $nagios3::params::p1_file,
-  $passive_host_checks_are_soft                = $nagios3::params::passive_host_checks_are_soft,
-
-  $perfdata_timeout                            = $nagios3::params::perfdata_timeout,
-  $precached_object_file                       = $nagios3::params::precached_object_file,
-  $process_performance_data                    = $nagios3::params::process_performance_data,
-  $resource_file                               = $nagios3::params::resource_file,
-  $retained_contact_host_attribute_mask        = $nagios3::params::retained_contact_host_attribute_mask,
-  $retained_contact_service_attribute_mask     = $nagios3::params::retained_contact_service_attribute_mask,
-  $retained_host_attribute_mask                = $nagios3::params::retained_host_attribute_mask,
-  $retained_process_host_attribute_mask        = $nagios3::params::retained_process_host_attribute_mask,
-  $retained_process_service_attribute_mask     = $nagios3::params::retained_process_service_attribute_mask,
-  $retained_service_attribute_mask             = $nagios3::params::retained_service_attribute_mask,
-  $retain_state_information                    = $nagios3::params::retain_state_information,
-  $retention_update_interval                   = $nagios3::params::retention_update_interval,
-  $service_check_timeout                       = $nagios3::params::service_check_timeout,
-  $service_check_timeout_state                 = $nagios3::params::service_check_timeout_state,
-  $service_freshness_check_interval            = $nagios3::params::service_freshness_check_interval,
-  $service_inter_check_delay_method            = $nagios3::params::service_inter_check_delay_method,
-  $service_interleave_factor                   = $nagios3::params::service_interleave_factor,
-  $service_perfdata_command                    = $nagios3::params::service_perfdata_command,
-  $service_perfdata_file                       = $nagios3::params::service_perfdata_file,
-  $service_perfdata_file_mode                  = $nagios3::params::service_perfdata_file_mode,
-  $service_perfdata_file_processing_command    = $nagios3::params::service_perfdata_file_processing_command,
-  $service_perfdata_file_processing_interval   = $nagios3::params::service_perfdata_file_processing_interval,
-  $service_perfdata_file_template              = $nagios3::params::service_perfdata_file_template,
-  $service_perfdata_process_empty_results      = $nagios3::params::service_perfdata_process_empty_results,
-  $sleep_time                                  = $nagios3::params::sleep_time,
-  $soft_state_dependencies                     = $nagios3::params::soft_state_dependencies,
-  $state_retention_file                        = $nagios3::params::state_retention_file,
-  $status_file                                 = $nagios3::params::status_file,
-  $status_update_interval                      = $nagios3::params::status_update_interval,
-  $temp_file                                   = $nagios3::params::temp_file,
-  $temp_path                                   = $nagios3::params::temp_path,
-  $time_change_threshold                       = $nagios3::params::time_change_threshold,
-  $translate_passive_host_checks               = $nagios3::params::translate_passive_host_checks,
-  $use_aggressive_host_checking                = $nagios3::params::use_aggressive_host_checking,
-  $use_embedded_perl_implicitly                = $nagios3::params::use_embedded_perl_implicitly,
-  $use_large_installation_tweaks               = $nagios3::params::use_large_installation_tweaks,
-  $use_regexp_matching                         = $nagios3::params::use_regexp_matching,
-  $use_retained_program_state                  = $nagios3::params::use_retained_program_state,
-  $use_retained_scheduling_info                = $nagios3::params::use_retained_scheduling_info,
-  $use_syslog                                  = $nagios3::params::use_syslog,
-  $use_timezone                                = $nagios3::params::use_timezone,
-  $use_true_regexp_matching                    = $nagios3::params::use_true_regexp_matching,
-
+  # nagios.cfg
+  $accept_passive_host_checks                   = $nagios3::params::accept_passive_host_checks,
+  $accept_passive_service_checks                = $nagios3::params::accept_passive_service_checks,
+  $additional_freshness_latency                 = $nagios3::params::additional_freshness_latency,
+  $admin_email                                  = $nagios3::params::admin_email,
+  $admin_pager                                  = $nagios3::params::admin_pager,
+  $auto_reschedule_checks                       = $nagios3::params::auto_reschedule_checks,
+  $auto_rescheduling_interval                   = $nagios3::params::auto_rescheduling_interval,
+  $auto_rescheduling_window                     = $nagios3::params::auto_rescheduling_window,
+  $bare_update_check                            = $nagios3::params::bare_update_check,
+  $broker_module                                = $nagios3::params::broker_module,
+  $cached_host_check_horizon                    = $nagios3::params::cached_host_check_horizon,
+  $cached_service_check_horizon                 = $nagios3::params::cached_service_check_horizon,
+  $cfg_dir                                      = $nagios3::params::cfg_dir,
+  $cfg_file                                     = $nagios3::params::cfg_file,
+  $check_external_commands                      = $nagios3::params::check_external_commands,
+  $check_for_orphaned_hosts                     = $nagios3::params::check_for_orphaned_hosts,
+  $check_for_orphaned_services                  = $nagios3::params::check_for_orphaned_services,
+  $check_for_updates                            = $nagios3::params::check_for_updates,
+  $check_host_freshness                         = $nagios3::params::check_host_freshness,
+  $check_result_path                            = $nagios3::params::check_result_path,
+  $check_result_reaper_frequency                = $nagios3::params::check_result_reaper_frequency,
+  $check_service_freshness                      = $nagios3::params::check_service_freshness,
+  $child_processes_fork_twice                   = $nagios3::params::child_processes_fork_twice,
+  $command_check_interval                       = $nagios3::params::command_check_interval,
+  $command_file                                 = $nagios3::params::command_file,
+  $daemon_dumps_core                            = $nagios3::params::daemon_dumps_core,
+  $date_format                                  = $nagios3::params::date_format,
+  $debug_file                                   = $nagios3::params::debug_file,
+  $debug_level                                  = $nagios3::params::debug_level,
+  $debug_verbosity                              = $nagios3::params::debug_verbosity,
+  $enable_embedded_perl                         = $nagios3::params::enable_embedded_perl,
+  $enable_environment_macros                    = $nagios3::params::enable_environment_macros,
+  $enable_event_handlers                        = $nagios3::params::enable_event_handlers,
+  $enable_flap_detection                        = $nagios3::params::enable_flap_detection,
+  $enable_notifications                         = $nagios3::params::enable_notifications,
+  $enable_predictive_host_dependency_checks     = $nagios3::params::enable_predictive_host_dependency_checks,
+  $enable_predictive_service_dependency_checks  = $nagios3::params::enable_predictive_service_dependency_checks,
+  $event_broker_options                         = $nagios3::params::event_broker_options,
+  $event_handler_timeout                        = $nagios3::params::event_handler_timeout,
+  $execute_host_checks                          = $nagios3::params::execute_host_checks,
+  $execute_service_checks                       = $nagios3::params::execute_service_checks,
+  $external_command_buffer_slots                = $nagios3::params::external_command_buffer_slots,
+  $free_child_process_memory                    = $nagios3::params::free_child_process_memory,
+  $global_host_event_handler                    = $nagios3::params::global_host_event_handler,
+  $global_service_event_handler                 = $nagios3::params::global_service_event_handler,
+  $high_host_flap_threshold                     = $nagios3::params::high_host_flap_threshold,
+  $high_service_flap_threshold                  = $nagios3::params::high_service_flap_threshold,
+  $host_check_timeout                           = $nagios3::params::host_check_timeout,
+  $host_freshness_check_interval                = $nagios3::params::host_freshness_check_interval,
+  $host_inter_check_delay_method                = $nagios3::params::host_inter_check_delay_method,
+  $host_perfdata_command                        = $nagios3::params::host_perfdata_command,
+  $host_perfdata_file                           = $nagios3::params::host_perfdata_file,
+  $host_perfdata_file_mode                      = $nagios3::params::host_perfdata_file_mode,
+  $host_perfdata_file_processing_command        = $nagios3::params::host_perfdata_file_processing_command,
+  $host_perfdata_file_processing_interval       = $nagios3::params::host_perfdata_file_processing_interval,
+  $host_perfdata_file_template                  = $nagios3::params::host_perfdata_file_template,
+  $host_perfdata_process_empty_results          = $nagios3::params::host_perfdata_process_empty_results,
+  $illegal_macro_output_chars                   = $nagios3::params::illegal_macro_output_chars,
+  $illegal_object_name_chars                    = $nagios3::params::illegal_object_name_chars,
+  $interval_length                              = $nagios3::params::interval_length,
+  $lock_file                                    = $nagios3::params::lock_file,
+  $log_archive_path                             = $nagios3::params::log_archive_path,
+  $log_event_handlers                           = $nagios3::params::log_event_handlers,
+  $log_external_commands                        = $nagios3::params::log_external_commands,
+  $log_file                                     = $nagios3::params::log_file,
+  $log_host_retries                             = $nagios3::params::log_host_retries,
+  $log_initial_states                           = $nagios3::params::log_initial_states,
+  $log_notifications                            = $nagios3::params::log_notifications,
+  $log_passive_checks                           = $nagios3::params::log_passive_checks,
+  $log_rotation_method                          = $nagios3::params::log_rotation_method,
+  $log_service_retries                          = $nagios3::params::log_service_retries,
+  $low_host_flap_threshold                      = $nagios3::params::low_host_flap_threshold,
+  $low_service_flap_threshold                   = $nagios3::params::low_service_flap_threshold,
+  $max_check_result_file_age                    = $nagios3::params::max_check_result_file_age,
+  $max_check_result_reaper_time                 = $nagios3::params::max_check_result_reaper_time,
+  $max_concurrent_checks                        = $nagios3::params::max_concurrent_checks,
+  $max_debug_file_size                          = $nagios3::params::max_debug_file_size,
+  $max_host_check_spread                        = $nagios3::params::max_host_check_spread,
+  $max_service_check_spread                     = $nagios3::params::max_service_check_spread,
+  $nagios_group                                 = $nagios3::params::nagios_group,
+  $nagios_user                                  = $nagios3::params::nagios_user,
+  $notification_timeout                         = $nagios3::params::notification_timeout,
+  $object_cache_file                            = $nagios3::params::object_cache_file,
+  $obsess_over_hosts                            = $nagios3::params::obsess_over_hosts,
+  $obsess_over_services                         = $nagios3::params::obsess_over_services,
+  $ochp_command                                 = $nagios3::params::ochp_command,
+  $ocsp_command                                 = $nagios3::params::ocsp_command,
+  $ocsp_timeout                                 = $nagios3::params::ocsp_timeout,
+  $p1_file                                      = $nagios3::params::p1_file,
+  $passive_host_checks_are_soft                 = $nagios3::params::passive_host_checks_are_soft,
+  $perfdata_timeout                             = $nagios3::params::perfdata_timeout,
+  $precached_object_file                        = $nagios3::params::precached_object_file,
+  $process_performance_data                     = $nagios3::params::process_performance_data,
+  $resource_file                                = $nagios3::params::resource_file,
+  $retain_state_information                     = $nagios3::params::retain_state_information,
+  $retained_contact_host_attribute_mask         = $nagios3::params::retained_contact_host_attribute_mask,
+  $retained_contact_service_attribute_mask      = $nagios3::params::retained_contact_service_attribute_mask,
+  $retained_host_attribute_mask                 = $nagios3::params::retained_host_attribute_mask,
+  $retained_process_host_attribute_mask         = $nagios3::params::retained_process_host_attribute_mask,
+  $retained_process_service_attribute_mask      = $nagios3::params::retained_process_service_attribute_mask,
+  $retained_service_attribute_mask              = $nagios3::params::retained_service_attribute_mask,
+  $retention_update_interval                    = $nagios3::params::retention_update_interval,
+  $service_check_timeout                        = $nagios3::params::service_check_timeout,
+  $service_check_timeout_state                  = $nagios3::params::service_check_timeout_state,
+  $service_freshness_check_interval             = $nagios3::params::service_freshness_check_interval,
+  $service_inter_check_delay_method             = $nagios3::params::service_inter_check_delay_method,
+  $service_interleave_factor                    = $nagios3::params::service_interleave_factor,
+  $service_perfdata_command                     = $nagios3::params::service_perfdata_command,
+  $service_perfdata_file                        = $nagios3::params::service_perfdata_file,
+  $service_perfdata_file_mode                   = $nagios3::params::service_perfdata_file_mode,
+  $service_perfdata_file_processing_command     = $nagios3::params::service_perfdata_file_processing_command,
+  $service_perfdata_file_processing_interval    = $nagios3::params::service_perfdata_file_processing_interval,
+  $service_perfdata_file_template               = $nagios3::params::service_perfdata_file_template,
+  $service_perfdata_process_empty_results       = $nagios3::params::service_perfdata_process_empty_results,
+  $sleep_time                                   = $nagios3::params::sleep_time,
+  $soft_state_dependencies                      = $nagios3::params::soft_state_dependencies,
+  $state_retention_file                         = $nagios3::params::state_retention_file,
+  $status_file                                  = $nagios3::params::status_file,
+  $status_update_interval                       = $nagios3::params::status_update_interval,
+  $temp_file                                    = $nagios3::params::temp_file,
+  $temp_path                                    = $nagios3::params::temp_path,
+  $time_change_threshold                        = $nagios3::params::time_change_threshold,
+  $translate_passive_host_checks                = $nagios3::params::translate_passive_host_checks,
+  $use_aggressive_host_checking                 = $nagios3::params::use_aggressive_host_checking,
+  $use_embedded_perl_implicitly                 = $nagios3::params::use_embedded_perl_implicitly,
+  $use_large_installation_tweaks                = $nagios3::params::use_large_installation_tweaks,
+  $use_regexp_matching                          = $nagios3::params::use_regexp_matching,
+  $use_retained_program_state                   = $nagios3::params::use_retained_program_state,
+  $use_retained_scheduling_info                 = $nagios3::params::use_retained_scheduling_info,
+  $use_syslog                                   = $nagios3::params::use_syslog,
+  $use_timezone                                 = $nagios3::params::use_timezone,
+  $use_true_regexp_matching                     = $nagios3::params::use_true_regexp_matching,
 ) inherits nagios3::params {
 
-  # Parameter validation
   validate_string($cgi_config_file)
   validate_string($config_dir)
   validate_string($config_dir_group)
@@ -266,6 +217,7 @@ class nagios3 (
     }
   }
 
+  # cgi.cfg
   validate_string($cgi_action_url_target)
   validate_array($cgi_authorized_for_all_host_commands)
   validate_array($cgi_authorized_for_all_hosts)
@@ -305,7 +257,7 @@ class nagios3 (
   validate_integer($cgi_use_pending_states)
   validate_integer($cgi_use_ssl_authentication)
 
-  # nagios.cfg parameter validation
+  # nagios.cfg
   validate_integer($accept_passive_host_checks)
   validate_integer($accept_passive_service_checks)
   validate_integer($additional_freshness_latency)
@@ -333,13 +285,11 @@ class nagios3 (
   }
   validate_string($command_check_interval)
   validate_string($command_file)
-
   validate_integer($daemon_dumps_core)
   validate_string($date_format)
   validate_string($debug_file)
   validate_integer($debug_level)
   validate_integer($debug_verbosity)
-
   validate_integer($enable_embedded_perl)
   validate_integer($enable_environment_macros)
   validate_integer($enable_event_handlers)
@@ -361,7 +311,6 @@ class nagios3 (
   if $global_service_event_handler != undef {
     validate_string($global_service_event_handler)
   }
-
   validate_numeric($high_host_flap_threshold)
   validate_numeric($high_service_flap_threshold)
   validate_integer($host_check_timeout)
@@ -388,11 +337,9 @@ class nagios3 (
   if $host_perfdata_process_empty_results != undef {
     validate_integer($host_perfdata_process_empty_results)
   }
-
   validate_string($illegal_macro_output_chars)
   validate_string($illegal_object_name_chars)
   validate_integer($interval_length)
-
   validate_string($lock_file)
   validate_string($log_archive_path)
   validate_integer($log_event_handlers)
@@ -406,18 +353,15 @@ class nagios3 (
   validate_integer($log_service_retries)
   validate_numeric($low_host_flap_threshold)
   validate_numeric($low_service_flap_threshold)
-
   validate_integer($max_check_result_file_age)
   validate_integer($max_check_result_reaper_time)
   validate_integer($max_concurrent_checks)
   validate_integer($max_debug_file_size)
   validate_integer($max_host_check_spread)
   validate_integer($max_service_check_spread)
-
   validate_string($nagios_group)
   validate_string($nagios_user)
   validate_integer($notification_timeout)
-
   validate_integer($obsess_over_hosts)
   validate_integer($obsess_over_services)
   if $ochp_command != undef {
@@ -478,7 +422,6 @@ class nagios3 (
   if $time_change_threshold != undef {
     validate_integer($time_change_threshold)
   }
-
   validate_integer($translate_passive_host_checks)
   validate_integer($use_aggressive_host_checking)
   validate_integer($use_embedded_perl_implicitly)
@@ -492,15 +435,10 @@ class nagios3 (
   }
   validate_integer($use_true_regexp_matching)
 
-  service { 'nagios':
-    enable => $service_enable,
-  }
-
   package { $package_name:
     ensure => $package_ensure,
   }
 
-  # Configuration directory handling
   file { $config_dir:
     ensure  => directory,
     owner   => $config_dir_owner,
@@ -510,7 +448,6 @@ class nagios3 (
     require => Package[$package_name],
   }
 
-  # Configuration file handling
   file { $config_file:
     ensure  => file,
     owner   => $config_file_owner,
@@ -541,5 +478,10 @@ class nagios3 (
     require => Package[$package_name],
   }
 
-}
+  service { 'nagios':
+    ensure  => $service_ensure,
+    enable  => $service_enable,
+    require => File[$config_file],
+  }
 
+}
