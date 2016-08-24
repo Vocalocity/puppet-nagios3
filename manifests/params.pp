@@ -43,6 +43,9 @@ class nagios3::params {
       # CentOS6 w/nagios from EPEL
       $package_ensure         = 'installed'
       $package_name           = 'nagios'
+      $service_ensure         = undef
+      $service_enable         = false
+      $service_file           = '/etc/rc.d/init.d/nagios'
 
       $config_dir        = '/etc/nagios'
       $config_dir_owner  = 'root'

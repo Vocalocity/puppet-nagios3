@@ -45,8 +45,9 @@ class nagios3 (
   $package_ensure = $nagios3::params::package_ensure,
   $package_name   = $nagios3::params::package_name,
 
-  $running      = true,
-  $atboot       = true,
+  $service_enable = $nagios3::params::service_enable,
+  $service_ensure = $nagios3::params::service_ensure,
+  $service_file   = $nagios3::params::service_file,
 
   # Nagioss configuration directorys
   $config_dir          = $nagios3::params::config_dir,
@@ -244,8 +245,6 @@ class nagios3 (
 ) inherits nagios3::params {
 
   # Parameter validation
-  validate_bool($atboot)
-  validate_bool($running)
   validate_string($cgi_config_file)
   validate_string($config_dir)
   validate_string($config_dir_group)
@@ -258,6 +257,14 @@ class nagios3 (
   validate_string($package_ensure)
   validate_string($package_name)
   validate_string($passwd_config)
+  validate_bool($service_enable)
+  validate_string($service_file)
+  if $service_ensure {
+    validate_string($service_ensure)
+    if ! ($service_ensure in [ 'running', 'stopped' ]) {
+      fail('service_ensure parameter must be running or stopped')
+    }
+  }
 
   validate_string($cgi_action_url_target)
   validate_array($cgi_authorized_for_all_host_commands)
@@ -485,14 +492,8 @@ class nagios3 (
   }
   validate_integer($use_true_regexp_matching)
 
-  $service_running = $running ? {
-    true    => 'running',
-    default => 'stopped'
-  }
-
-  $service_atboot = $atboot ? {
-    true    => true,
-    default => false
+  service { 'nagios':
+    enable => $service_enable,
   }
 
   package { $package_name:
@@ -529,6 +530,15 @@ class nagios3 (
     mode    => $config_file_mode,
     content => template("${module_name}/cgi.cfg.erb"),
     require => File[$config_dir],
+  }
+
+  file { $service_file:
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    content => template("${module_name}/nagios.init.erb"),
+    require => Package[$package_name],
   }
 
 }
