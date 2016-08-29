@@ -105,7 +105,7 @@ class nagios3::params {
       $enable_notifications                         = 1
       $enable_predictive_host_dependency_checks     = 1
       $enable_predictive_service_dependency_checks  = 1
-      $event_broker_options                         = '-1'
+      $event_broker_options                         = -1
       $event_handler_timeout                        = 30
       $execute_host_checks                          = 1
       $execute_service_checks                       = 1
