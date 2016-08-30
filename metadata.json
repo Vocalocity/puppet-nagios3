@@ -1,12 +1,12 @@
 {
-  "name": "dfilion-nagios3",
-  "version": "0.1.0",
-  "author": "dfilion",
-  "summary": "Module to manage the installation and configuration of Nagios v3.",
+  "name": "achoo-nagios3",
+  "version": "1.0.0",
+  "author": "achoo",
+  "summary": "This module will install Nagios 3 and manage its main and CGI configs",
   "license": "Apache 2.0",
-  "source": "https://github.com/dfilion/puppet-nagios3",
-  "issues_url": "https://github.com/dfilion/puppet-nagios3/issues",
-  "project_page": "https://github.com/dfilion/puppet-nagios3",
+  "source": "https://github.com/Vocalocity/puppet-nagios3",
+  "issues_url": "https://github.com/Vocalocity/puppet-nagios3/issues",
+  "project_page": "https://github.com/Vocalocity/puppet-nagios3",
   "dependencies": [
     {"version_requirement":">= 1.0.0","name":"puppetlabs-stdlib"}
   ]
