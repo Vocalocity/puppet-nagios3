@@ -381,7 +381,7 @@ class nagios3 (
   if $ocsp_command != undef {
     validate_string($ocsp_command)
   }
-  validate_integer($ocsp_timeout, 1, 0)
+  validate_integer($ocsp_timeout, undef, 0)
   validate_string($object_cache_file)
   validate_string($p1_file)
   validate_integer($passive_host_checks_are_soft, 1, 0)
