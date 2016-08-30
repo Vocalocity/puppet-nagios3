@@ -470,7 +470,7 @@ class nagios3 (
     owner   => $config_file_owner,
     group   => $config_file_group,
     mode    => $config_file_mode,
-    content => template("${module_name}/nagios.cfg.erb"),
+    content => template("${module_name}/etc/nagios/nagios.cfg.erb"),
     require => [
       Package[$package_name],
       File[$config_dir]
@@ -482,7 +482,7 @@ class nagios3 (
     owner   => $config_file_owner,
     group   => $config_file_group,
     mode    => $config_file_mode,
-    content => template("${module_name}/cgi.cfg.erb"),
+    content => template("${module_name}/etc/nagios/cgi.cfg.erb"),
     require => File[$config_dir],
   }
 
@@ -491,7 +491,7 @@ class nagios3 (
     owner   => 'root',
     group   => 'root',
     mode    => '0755',
-    content => template("${module_name}/nagios.init.erb"),
+    content => template("${module_name}/etc/init.d/nagios.erb"),
     require => Package[$package_name],
   }
 
