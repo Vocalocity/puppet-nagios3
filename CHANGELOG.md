@@ -1,3 +1,7 @@
+## Release 1.0.2 - 2016-11-09
+
+ - Rework logic to set ownership and permissions in init script
+
 ## Release 1.0.1 - 2016-08-30
 
 ### Bug fixes:
