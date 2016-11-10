@@ -133,7 +133,7 @@ fi
 
 # Set ownership and permissions of config files and directories
 chown -R ${NagiosUser}:${NagiosGroup} "$NagiosVarDir" /var/spool/nagios
-chown root:${NagiosGroup} \
+chown -R root:${NagiosGroup} \
 <% @cfg_dir.each do |val| -%>
   <%= val %> \
 <% end -%>
@@ -144,16 +144,9 @@ chown root:${NagiosGroup} \
   <%= @resource_file %>
 chown root:apache <%= @passwd_config %>
 find $NagiosVarDir \
-    -type d -exec chmod 750 {} + ,\
-    -type f -exec chmod 640 {} +
-chmod 750 \
-<% @cfg_dir.each do |val| -%>
-  <%= val %> \
-<% end -%>
-<% @cfg_file.map {|val| File.dirname(val)}.sort.uniq.each do |dir| -%>
-  <%= dir %> \
-<% end -%>
-  <%= File.dirname(resource_file) %>
+  -type d -exec chmod 750 {} + ,\
+  -type f -exec chmod 640 {} +
+chmod 750 <%= File.dirname(resource_file) %>
 chmod 640 <%= @passwd_config -%> <%= @resource_file %>
           
 # See how we were called.

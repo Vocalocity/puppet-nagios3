@@ -1,6 +1,6 @@
 {
   "name": "achoo-nagios3",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "achoo",
   "summary": "This module will install Nagios 3 and manage its main and CGI configs",
   "license": "Apache 2.0",
