@@ -110,7 +110,7 @@ NagiosCfgFile=<%= @config_file %>
 NagiosStatusFile=<%= @status_file %>
 NagiosRetentionFile=<%= @state_retention_file %>
 NagiosCommandFile=<%= @command_file %>
-NagiosVarDir=<%= File.dirname(log_file) %>
+NagiosVarDir=<%= File.dirname(@log_file) %>
 NagiosRunFile=<%= @lock_file %>
 NagiosLockDir=/var/lock/subsys
 NagiosLockFile=nagios
