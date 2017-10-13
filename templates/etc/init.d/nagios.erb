@@ -110,7 +110,7 @@ NagiosCfgFile=<%= @config_file %>
 NagiosStatusFile=<%= @status_file %>
 NagiosRetentionFile=<%= @state_retention_file %>
 NagiosCommandFile=<%= @command_file %>
-NagiosVarDir=<%= File.dirname(log_file) %>
+NagiosVarDir=<%= File.dirname(scope.lookupvar('nagios3::log_file')) %>
 NagiosRunFile=<%= @lock_file %>
 NagiosLockDir=/var/lock/subsys
 NagiosLockFile=nagios
@@ -140,13 +140,13 @@ chown -R root:${NagiosGroup} \
 <% @cfg_file.map {|val| File.dirname(val)}.sort.uniq.each do |dir| -%>
   <%= dir %> \
 <% end -%>
-  <%= File.dirname(resource_file) %> \
+  <%= File.dirname(@resource_file) %> \
   <%= @resource_file %>
 chown root:apache <%= @passwd_config %>
 find $NagiosVarDir \
   -type d -exec chmod 750 {} + ,\
   -type f -exec chmod 640 {} +
-chmod 750 <%= File.dirname(resource_file) %>
+chmod 750 <%= File.dirname(@resource_file) %>
 chmod 640 <%= @passwd_config -%> <%= @resource_file %>
           
 # See how we were called.
