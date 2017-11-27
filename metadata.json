@@ -8,6 +8,6 @@
   "issues_url": "https://github.com/Vocalocity/puppet-nagios3/issues",
   "project_page": "https://github.com/Vocalocity/puppet-nagios3",
   "dependencies": [
-    {"version_requirement":">= 1.0.0","name":"puppetlabs-stdlib"}
+    {"version_requirement":">= 4.0.0","name":"puppetlabs-stdlib"}
   ]
 }
